@@ -1,0 +1,8 @@
+<person>
+<id>2</id>
+<fname>Juan Antonio</fname>
+<lname>Ruz</lname>
+<DOB>1976-03-04</DOB>  <!-- date of birth -->
+<wage>100</wage>
+<location>US</location>  <!-- one of three values: (US = United States, UK = United Kingdom, AU = Australia) -->
+</person>

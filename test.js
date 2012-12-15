@@ -1,12 +1,8 @@
-var new_object={
-id: 1,
-fname: "Joe",
-lname: "Brown",
-DOB: "1987-03-04",
-wage: 100,
-location: "US"
-};
-var sys=require("sys");
-sys.puts(new_object.location);
+var express=require('express');
+var app =express();
+var persons = require('./routes/persons');
+app.get('/persons', persons.find_all);
+app.get('/persons/:id', persons.find_by_id);
 
-
+app.listen(3000);
+console.log("server listen in 3000");
