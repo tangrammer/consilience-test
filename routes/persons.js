@@ -1,47 +1,124 @@
 var person_juan={
+    person:{
     id: 1,
     fname: "Static Juan",
     lname: "Ruz",
    DOB: "1976-06-13",
     wage: 100,
     location: "ES"
+}
 };
 
+var fs = require('fs'),  xml2js = require('xml2js'), sys=require('sys');
+function console_inspects(o){
+            sys.puts(sys.inspect(o));    
+}
 
-var fs = require('fs'),  xml2js = require('xml2js');
-var __dirname="./data";
+function person_details (result){
+    var person=result.person;
+        return {identity: person.id, fname : person.fname, lname: person.lname};
+}
+
+function create_parser(){
+    var __dirname= "./data";
+    var parser= new xml2js.Parser({explicitArray:false});
+    var asyncronous_response= function(res_function){
+        return function(result){
+                     res_function(result);
+        };
+    };
+   return {
+    read_data: function (id, target_function){
+ 
+       parser.addListener('end',asyncronous_response(target_function));
+
+        fs.readFile(__dirname + '/'+id+'.xml', function(err, data) {
+            parser.parseString(data);
+        });
+    },
+   
+}
+}
+
+function req_res_base(req, res){
+   return {
+       print_result: function (r){
+        res.send(r);
+    }
+   }
+}
+
+function function_inheritance(older, newer, args){
+    var superior=older.apply(this, args);
+    for(var name in superior){
+         newer[name]=superior[name];
+    } 
+    
+
+}
+
+var  find_by_id=function(req, res){
+    function_inheritance(req_res_base, this, arguments);
+
+    var person_id=req.params.id;    
+    var mi_parser=create_parser();    
+
+    function target_data(result){
+        print_result(person_details(result));
+    };
 
 
-var parser = new xml2js.Parser();
+    mi_parser.read_data(person_id, target_data);
 
 
-var read_data =function (id){
-    fs.readFile(__dirname + '/'+id+'.xml', function(err, data) {
-        parser.parseString(data);
-    });
-};
+
+    };
+ 
+    
+
+
+exports.find_by_id=find_by_id;
 
 
 exports.find_all=function (req, res) {
-    res.send([person_juan, person_juan]);
+    var mi_parser=create_parser();    
+    var cole=[];
+    var contador=2;
+    function addResult(result){
+        cole.push(person_details(result));
+        if(cole.length==contador){
+            //TODO ORDER THE RESULTS BY ID
+            res.send(cole);
+        }
+ }
+    
+   create_parser().read_data(2, addResult);
+   create_parser().read_data(1, addResult);
 };
 
-exports.find_by_id= function(req, res){
-    var asyncronous_response= function(res){
-        return function(result){
-            var person=result.person;
-            res.send({id: person.id[0], fname : person.fname[0], lname: person.lname[0]});
-        };
-    };
-
-    parser.addListener('end', asyncronous_response(res));
-
-    read_data(req.params.id);
-
-};
 
 
-//    res.send({id:req.params.id, name: person.person.fname, description: person.person.lname});
-//};
 
 
+
+
+
+
+
+
+
+// TESTING SOME IDEAS
+
+
+function prueba_method_call_use_context(){
+var x = 10;
+var o = { x: 15 };
+function f(message)
+{
+    console.log(message);
+    console.log(this.x);
+}
+
+f("invoking f**************");
+f.call(o, "invoking f via call*************");
+}
