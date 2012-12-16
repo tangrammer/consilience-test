@@ -4,5 +4,30 @@ var persons = require('./routes/persons');
 app.get('/persons', persons.find_all);
 app.get('/persons/:id', persons.find_by_id);
 
+function log(o){
+console.log(o);
+}
+
 app.listen(3000);
-console.log("server listen in 3000");
+var mensaje="server is  listening in 3000";
+log(mensaje);
+
+// testing prototypal inheritance
+var prueba={name: "juan"};
+prueba.canta=function(){return "canta:::"+this.name;};
+log(prueba.canta());
+
+
+var prueba_child=Object.create(prueba);
+prueba_child.name="eppe";
+log(prueba_child.canta());
+
+/*
+ - Create a webpage primarily using JavaScript that throw an personalized object
+- implements the basic logic for interacting with the xml resource - load/save/create new/etc  (it's okay to use an AJAX library for the actual data exchange)
+- synchs member attributes with the fields of the resource
+- has methods to translate the DOB (date of birth) and wage into formats appropriate for the location; using Functional Programming (not using IF/switch statements)
+- Uses prototypes and closures to rebuild the object when the location changes, modifying/replacing methods. 
+ 
+- Uses an open source JS library to generate the user interface.
+*/
