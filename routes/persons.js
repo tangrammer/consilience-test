@@ -10,13 +10,10 @@ var person_juan={
 };
 
 var fs = require('fs'),  xml2js = require('xml2js'), sys=require('sys');
-function console_inspects(o){
-            sys.puts(sys.inspect(o));    
-}
 
 function person_details (result){
     var person=result.person;
-        return {identity: person.id, fname : person.fname, lname: person.lname};
+        return {id: person.id, fname : person.fname, lname: person.lname};
 }
 
 function create_parser(){

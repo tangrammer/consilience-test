@@ -1,4 +1,5 @@
 var sys=require('sys');
+var fs=require('fs');
 function console_inspects(o){
             sys.puts(sys.inspect(o));    
 }
@@ -51,6 +52,12 @@ jquery.ajaxSettings.xhr = function () {
     return new XMLHttpRequest;
 }
 
+
+function write_data(data, write_callback){
+//function write_callback(err) { if (err) throw err; console.log('It\'s saved!');}
+    fs.writeFile('./data/new_'+data.id+'.txt', xml_data, write_callback);
+}
+
 function load_data(url){
 
     function error(jqXHR, textStatus, errorThrown){
@@ -59,8 +66,8 @@ function load_data(url){
  
     function success(data, textStatus, jqXHR){
         console.log(data);
-        console.log(jstoxml.toXML({person:data}));
-
+        var xml_data=jstoxml.toXML({person:data});
+        console.log(xml_data);
     }
 
     jquery.ajax({
