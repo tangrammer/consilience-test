@@ -4,12 +4,43 @@ function console_inspects(o){
             sys.puts(sys.inspect(o));    
 }
 
-var express=require('express');
+var express=require('express'), stylus = require('stylus'), nib = require('nib');
+
+
 var app =express();
+
+function compile(str, path) {
+  return stylus(str)
+    .set('filename', path)
+    .use(nib())
+}
+var __dirname=".";
+
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({ secret: 'this is a secret' }));
+  app.use(stylus.middleware({
+      src: __dirname + '/public',
+      compile: compile
+    }));
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
+});
+
 var jquery=require('jquery');
 var persons = require('./routes/persons');
 app.get('/persons', persons.find_all);
 app.get('/persons/:id', persons.find_by_id);
+app.get('/', 
+        function(req, res){
+            res.render('index', {title:'hola', youAreUsingJade: 'me'});
+        }
+       );
+
 
 function log(o){
 console.log(o);
