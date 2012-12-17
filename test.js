@@ -22,6 +22,10 @@ var prueba_child=Object.create(prueba);
 prueba_child.name="eppe";
 log(prueba_child.canta());
 
+prueba_child.canta= function(){return "singing"+this.name;};
+log(prueba.canta());
+log(prueba_child.canta());
+
 /*
  - Create a webpage primarily using JavaScript that throw an personalized object
 - implements the basic logic for interacting with the xml resource - load/save/create new/etc  (it's okay to use an AJAX library for the actual data exchange)
