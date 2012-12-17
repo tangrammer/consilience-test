@@ -5,7 +5,7 @@
   , "dependencies": {
       "express": "3.x"
     , "jquery": "1.7.2"
-    , "json2xml": "0.0.1"
+    , "jstoxml": "0.1.0"
     ,"xmlhttprequest": "1.5.0"
     , "stylus": ">= 0.0.1"
     , "jade": ">= 0.0.1"

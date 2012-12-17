@@ -42,8 +42,8 @@ log(prueba_child.canta());
 - Uses an open source JS library to generate the user interface.
 */
 
-var json2xml = require('json2xml');
 
+var jstoxml = require('jstoxml');
 XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 jquery.support.cors = true;
@@ -58,11 +58,9 @@ function load_data(url){
     };
  
     function success(data, textStatus, jqXHR){
-
         console.log(data);
-        console_inspects(json2xml);
-//        console.log(json2xml.convert(data, "person"));
-   //  var r=json2xml({ a: 1 });
+        console.log(jstoxml.toXML({person:data}));
+
     }
 
     jquery.ajax({
