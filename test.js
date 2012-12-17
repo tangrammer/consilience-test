@@ -1,5 +1,11 @@
+var sys=require('sys');
+function console_inspects(o){
+            sys.puts(sys.inspect(o));    
+}
+
 var express=require('express');
 var app =express();
+var jquery=require('jquery');
 var persons = require('./routes/persons');
 app.get('/persons', persons.find_all);
 app.get('/persons/:id', persons.find_by_id);
@@ -35,3 +41,43 @@ log(prueba_child.canta());
  
 - Uses an open source JS library to generate the user interface.
 */
+
+var json2xml = require('json2xml');
+
+XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+jquery.support.cors = true;
+jquery.ajaxSettings.xhr = function () {
+    return new XMLHttpRequest;
+}
+
+function load_data(url){
+
+    function error(jqXHR, textStatus, errorThrown){
+        console.log("error"+errorThrown);
+    };
+ 
+    function success(data, textStatus, jqXHR){
+
+        console.log(data);
+        console_inspects(json2xml);
+//        console.log(json2xml.convert(data, "person"));
+   //  var r=json2xml({ a: 1 });
+    }
+
+    jquery.ajax({
+        type: 'GET',
+        url: url,
+        //  data: data,
+        success: success,
+        error: error,
+        dataType: "json"
+    });
+};
+
+load_data("http://localhost:3000/persons/1");
+
+
+
+
+
