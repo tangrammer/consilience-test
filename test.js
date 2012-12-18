@@ -31,12 +31,14 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
-var jquery=require('jquery');
+
 var persons = require('./routes/persons');
 app.get('/persons', persons.find_all);
 app.get('/persons/:id', persons.find_by_id);
+//app.get('/persons.json/:id', persons.find_by_id_json);
 app.get('/', 
         function(req, res){
+
             res.render('index', {title:'Consilience Skill Test'});
         }
        );
@@ -75,14 +77,6 @@ log(prueba_child.canta());
 */
 
 
-var jstoxml = require('jstoxml');
-XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
-jquery.support.cors = true;
-jquery.ajaxSettings.xhr = function () {
-    return new XMLHttpRequest;
-}
-
 
 function write_data(data, url_data, write_callback){
 //function write_callback(err) { if (err) throw err; console.log('It\'s saved!');}
@@ -105,32 +99,6 @@ var counter_file=fs.readFileSync(filename);
     }
     
 }
-
-function load_data(url){
-
-    function error(jqXHR, textStatus, errorThrown){
-        console.log("error"+errorThrown);
-    };
- 
-    function success(data, textStatus, jqXHR){
-        console.log(data);
-        var xml_data=jstoxml.toXML({person:data});
-        console.log(xml_data);
-    }
-
-    jquery.ajax({
-        type: 'GET',
-        url: url,
-        //  data: data,
-        success: success,
-        error: error,
-        dataType: "json"
-    });
-};
-
-load_data("http://localhost:3000/persons/1");
-
-
 
 
 

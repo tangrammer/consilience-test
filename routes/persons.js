@@ -62,7 +62,7 @@ var  find_by_id=function(req, res){
 
     function target_data(result){
         var model=person_details(result);
-            res.render('person', {model: model});
+            res.render('person', {person: model});
 
       //  print_result(person_details(result));
     };

@@ -1,0 +1,33 @@
+/*
+- Implement a server-side Resource:
+- capable of storing and retrieving xml records of the following form:
+<person>
+<id>1</id>
+<fname>Joe</fname>
+<lname>Brown</lname>
+<DOB>1987-03-04</DOB>  <!-- date of birth -->
+<wage>100</wage>
+<location>US</local>  <!-- one of three values: (US = United States, UK = United Kingdom, AU = Australia) -->
+</person>
+- implemented as a RESTful resource accessed through PUT/POST/GET is preferred, otherwise an equivalent server-side program is okay.
+- Any language is acceptable, but sever-side JS preferred.
+ 
+ - Create a webpage primarily using JavaScript that:
+- Features a hand coded JS object that:
+- implements the basic logic for interacting with the xml resource - load/save/create new/etc  (it's okay to use an AJAX library for the actual data exchange)
+- synchs member attributes with the fields of the resource
+- has methods to translate the DOB (date of birth) and wage into formats appropriate for the location; using Functional Programming (not using IF/switch statements)
+- Uses prototypes and closures to rebuild the object when the location changes, modifying/replacing methods. 
+ 
+- Uses an open source JS library to generate the user interface.
+ 
+- Provides a user interface that:
+- has basic widgets for the fields in the XML record
+- uses a drop down for location
+- has readonly fields that display the translated DOB and Wage values based on location
+- rebuilds the JS object and repaints the screen when fields are modified
+- has Save and Load buttons
+- has a button that displays a JSON representation of the JS object
+ 
+Copyright 2012, Consilience International LLC.
+*/
