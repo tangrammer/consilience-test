@@ -61,8 +61,12 @@ var  find_by_id=function(req, res){
     var mi_parser=create_parser();    
 
     function target_data(result){
-        print_result(person_details(result));
+        var model=person_details(result);
+            res.render('person', {model: model});
+
+      //  print_result(person_details(result));
     };
+
 
 
     mi_parser.read_data(person_id, target_data);

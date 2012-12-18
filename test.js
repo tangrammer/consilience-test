@@ -37,7 +37,7 @@ app.get('/persons', persons.find_all);
 app.get('/persons/:id', persons.find_by_id);
 app.get('/', 
         function(req, res){
-            res.render('index', {title:'hola', youAreUsingJade: 'me'});
+            res.render('index', {title:'Consilience Skill Test'});
         }
        );
 

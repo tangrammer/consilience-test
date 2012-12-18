@@ -134,6 +134,9 @@ header {
 .main-content p {
   margin-bottom: 20px;
 }
+.person_lname {
+  color: #f00;
+}
 .sidebar {
   float: left;
   width: 200px;
