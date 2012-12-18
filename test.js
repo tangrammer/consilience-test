@@ -38,7 +38,6 @@ app.get('/persons/:id', persons.find_by_id);
 //app.get('/persons.json/:id', persons.find_by_id_json);
 app.get('/', 
         function(req, res){
-
             res.render('index', {title:'Consilience Skill Test'});
         }
        );
