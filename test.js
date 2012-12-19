@@ -51,19 +51,7 @@ app.listen(3000);
 var mensaje="server is  listening in 3000";
 log(mensaje);
 
-// testing prototypal inheritance
-var prueba={name: "juan"};
-prueba.canta=function(){return "canta:::"+this.name;};
-log(prueba.canta());
 
-
-var prueba_child=Object.create(prueba);
-prueba_child.name="eppe";
-log(prueba_child.canta());
-
-prueba_child.canta= function(){return "singing"+this.name;};
-log(prueba.canta());
-log(prueba_child.canta());
 
 /*
  - Create a webpage primarily using JavaScript that throw an personalized object
