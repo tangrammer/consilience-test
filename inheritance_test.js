@@ -61,33 +61,64 @@ function basic_person_f(){
 }
 var comp_locale
 
-function person_data(){
+function Person_data(){
+
     this.fname="juanantonio"; 
     this.lname="ruz";
-    this.locale={
-        DOB:{
-            printer_dob: printer_data, 
-            value: "13/06/1976",
-            get_print_value: function(){
-                return printer_data.call({date:this.value});
-            }
-        }
-    };
-    return this;
 
+    this.DOB_value="13/06/1976";
+    this.printer_dob=printer_data;
+
+
+
+//    this.printer_dob.call({date:this.DOB_value});    
+
+    this.DOB=function(){
+        
+        return this.printer_dob.call({date:this.DOB_value});
+    };
+    this.get_fname=function(){return this.fname};
+    
+// extract this.DOB and this.fname outside definition Person_data
+//Person_data.prototype.get_DOB=function(){return this.locale.DOB.get_print_value();}.call(person_example);    
+//Person_data.prototype.get_fname=function(){return this.fname;}();
 };
 
 
-var o=new person_data();
+var person_example=new Person_data();
 
-log("o: "+o.aver);
 
-person_data.prototype.aver=function(){return this.fname;};
-log("o: "+o.aver());
+log("person_example.get_fname: "+person_example.get_fname());
+log("person_example.get_DOB: "+person_example.DOB());
 
-var f=new person_data();
-log("f: "+f.aver());
 
+var person_localized_function=function(){
+    //refining in instance
+    this.printer_dob=date_in_locale_printer.UK;
+    this.fname="jolin";
+};
+//person_localized_function.prototype=new person_example.constructor;
+// the same that 
+person_localized_function.prototype=new Person_data();
+var person_localized_example=new person_localized_function();
+person_localized_example.fname="peep";
+
+person_localized_example.printer_dob=date_in_locale_printer.AU;
+person_localized_function.prototype.printer_dob=date_in_locale_printer.US;
+
+person_localized_function.prototype.fname="esto no se solapa a la instancia";
+log("testing!!");
+log("person_localized fname: "+person_localized_example.get_fname());
+log("person_localized: "+person_localized_example.DOB());
+
+/*
+var f=function(){};
+f.prototype=o;
+
+var k=new f();
+log("k.aver: "+k.aver());
+*/
+/*
 person_data.prototype.fname="mas";
 log("f: after "+f.aver());
 
@@ -105,6 +136,7 @@ log("d from f: "+d.prototype.fname);
 
 var k=new d.constructor();
 log("k: "+k.fname);
+*/
 log("\n\n\n\n\n");
 
 
@@ -115,7 +147,7 @@ function person_app(){
 //    var DOB=locale.DOB.get_print_value();
 }
 var h=new person_app();
-h.prototype=new person_data();
+h.prototype=new Person_data();
 h.get_fname=function(){return this.fname;};
 console.log("FNAMEEE"+h.get_fname());
 
