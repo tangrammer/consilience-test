@@ -38,7 +38,13 @@ var person_example={
         wage: 100,
         location: "ES"
     };
-var juan_date="13/06/1976";
+var juan_date="1976-06-13";
+
+function parse_data(val){
+    return new Date(val);
+}
+log(parse_data(juan_date));
+
 function Person_data(){
     this.id=1;
     
