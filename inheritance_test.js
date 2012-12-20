@@ -11,8 +11,6 @@ app.listen(3000);
 reloadCode();
 
 
-
-
 /*
 when locale change rebuild the object using prototypes and closures
 */
@@ -35,14 +33,8 @@ var data_person_example={
         location: "ES"
     };
 
-log("eaa");
-var p=i18n.date_printer.AU;
 
-log(p.call({date:data_person_example.DOB}));
-log("yuu");
-
-
-function Person_data(){
+function Person(){
     this.id=1;
     
     this.fname="juanantonio"; 
@@ -65,8 +57,8 @@ function Person_data(){
       
       // --> outside the function definition    
       
-      Person_data.prototype.DOB=function(){return this.printer_dob.call({date:this.DOB_value});    
-      Person_data.prototype.get_fname=function(){return this.fname;}();
+      Person.prototype.DOB=function(){return this.printer_dob.call({date:this.DOB_value});    
+      Person.prototype.get_fname=function(){return this.fname;}();
     */
     
     this.DOB=function(){
@@ -81,14 +73,15 @@ function Person_data(){
 };
 
 
-var person_example=new Person_data();
+var person_example=new Person();
 
 log("person_example.get_fname: "+person_example.get_fname());
 log("person_example.get_DOB: "+person_example.DOB());
 
 
 
-var person_localized_function=function(){
+
+function PersonLocalized(){
     //refining in instance
 
     this.printer_dob=i18n.date_printer.UK;
@@ -97,15 +90,15 @@ var person_localized_function=function(){
 };
 
 /*
-  //--> asigning prototype to person_localized_function 
-  person_localized_function.prototype=new person_example.constructor;
+  //--> asigning prototype to PersonLocalized 
+  PersonLocalized.prototype=new person_example.constructor;
   //--> the same as
-  person_localized_function.prototype=new Person_data();
+  PersonLocalized.prototype=new Person();
 */
 
-person_localized_function.prototype=new Person_data();
+PersonLocalized.prototype=new Person();
 
-var person_localized_example=new person_localized_function();
+var person_localized_example=new PersonLocalized();
 var new_name="JOE AU";
 var new_wage=150.5;
 
@@ -116,9 +109,9 @@ person_localized_example.wage_value=new_wage;
 person_localized_example.printer_wage=i18n.wage_printer.AU;
 
 // this not affect to the refined instance
-person_localized_function.prototype.printer_dob=i18n.date_printer.US;
-person_localized_function.prototype.printer_wage=i18n.wage_printer.US;
-person_localized_function.prototype.fname="i18n localized user";
+PersonLocalized.prototype.printer_dob=i18n.date_printer.US;
+PersonLocalized.prototype.printer_wage=i18n.wage_printer.US;
+PersonLocalized.prototype.fname="i18n localized user";
 
 
 var person_localized_example_fname=person_localized_example.get_fname();
