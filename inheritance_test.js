@@ -46,7 +46,7 @@ function PersonLocalized(){
     };
 
     this.get_wage=function(){
-        return i18n.wage_printer[this.lang].call({wage:this.wage});
+        return i18n.wage_printer[this.lang].call(this);
     };
 };
 
