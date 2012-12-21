@@ -1,10 +1,15 @@
 extend layout
+block more_js
+ script(src="/javascripts/core.js")
+ script(src="/javascripts/i18n.js")
+ script(src="/javascripts/persons.js")
 block content
       .welcome
         p
         | The point of this assessment is demonstrate skills with JS, JSON, XML and basic RESTful interaction. 
         p    
         a(href='#', onclick='start();') start 
+        
 
 block sidebar
   .widget(style='display:none')

@@ -7,7 +7,7 @@ html
 
     script(src="/javascripts/jquery-1.8.3.js")
     script(src="/javascripts/jquery-ui-1.9.2.custom.js")
-
+    block more_js
   body
     header
       h1 #{title}
@@ -17,5 +17,16 @@ html
       .sidebar
         block sidebar
     footer
+      a(href='#', onclick='localize("US");') US 
+      -
+      a(href='#', onclick='localize("UK");') UK 
+      -
+      a(href='#', onclick='localize("AU");') AU 
+      hr
+      a(href='#', onclick='basic_person();') person 
+      br
+      a(href='#', onclick='i18n_person();') person_i18n 
+      hr
+      br
       p developed by juanantonioruz@gmail.com
     script(src="/javascripts/view.index.js")
