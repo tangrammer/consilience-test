@@ -46,7 +46,7 @@ function internationalize(person){
 
 
 function invoke_i18n_methods(_p){
-    log("\n test person: language: "+_p.lang);
+    log("\nDebug Person:\nLanguage: "+(_p.lang || "NO LOCALIZED"));
     log(_p.get_fname());
     log(_p.get_DOB());
     log(_p.get_wage());

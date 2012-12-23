@@ -5,8 +5,10 @@ var app =express();
 var core=require('./my_core');
 var i18n=require('./i18n');
 var dob=require('./dob.js');
+
 core.load_library_to_global("debug");
-require('./persons.js');
+
+var $persons=require('./persons.js');
 
 app.listen(3000);
 reloadCode();
@@ -17,16 +19,17 @@ spec([
 "public/javascripts/core.js",
 "public/javascripts/i18n.js"
 ]);
-log("--------->>>>>>"+webmaster);
+log("--------->>>>>>"+$persons.webmaster);
 
-var person=create_person(data_person_example);
+var person=$persons.create_person($persons.data_person_example);
 
-var person_i18n=internationalize(person);
-var person_i18n_bis=internationalize(create_person({id: 1, DOB: "1999-07-23", wage:150, fname: "PEPE"}));
+var person_i18n=$persons.internationalize(person);
+var person_i18n_bis=$persons.internationalize($persons.create_person({id: 1, DOB: "1999-07-23", wage:150, fname: "PEPE"}));
 
-invoke_i18n_methods(person);
+$persons.invoke_i18n_methods(person);
 
-invoke_i18n_methods(person_i18n);
-set_locale("AU");
-invoke_i18n_methods(person_i18n);
+$persons.invoke_i18n_methods(person_i18n);
+$persons.set_locale("AU");
+$persons.invoke_i18n_methods(person_i18n);
+
 

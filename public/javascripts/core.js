@@ -5,7 +5,7 @@ for(value in spec){
 
 }
 
-}
+};
 var getters=function(f, props){
     for(var i=0; i<props.length; i++){
         var mi_get=function(x){
@@ -15,4 +15,4 @@ var getters=function(f, props){
         }(i);
         f.prototype['get_'+props[i]]=mi_get;
     }
-}
+};
