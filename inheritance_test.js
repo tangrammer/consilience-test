@@ -21,7 +21,7 @@ spec([
 "public/javascripts/core.js",
 "public/javascripts/i18n.js"
 ]);
-log("--------->>>>>>"+$persons.webmaster);
+
 
 var person=$persons.create_person($persons.data_person_example);
 

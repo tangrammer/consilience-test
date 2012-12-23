@@ -1,13 +1,10 @@
 // this file use ./core.js and ./i18n.js
-var webmaster="juanantonioruz@gmail.com";
-
 var data_person_example={
         id: 1,
         fname: "Juan Antonio",
         lname: "Ruz",
         DOB: "1976-06-13",
-        wage: 100,
-        location: "ES"
+        wage: 100
     };
 
 
@@ -54,5 +51,3 @@ function invoke_i18n_methods(_p){
     log(_p.get_wage());
     
 }
-
-//console.log(Person);
