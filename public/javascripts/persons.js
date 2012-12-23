@@ -18,6 +18,7 @@ function Person(){
 function create_person(spec){
     var p=new Person();
     init(p, spec);
+    p.DOB=new Date(p.DOB);
     return p;
 }
 
