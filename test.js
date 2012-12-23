@@ -46,9 +46,9 @@ app.get('/',
 function log(o){
 console.log(o);
 }
-
-app.listen(3000);
-var mensaje="server is  listening in 3000";
+var port = process.env.PORT || 3000;
+app.listen(port);
+var mensaje="server is  listening in "+port;
 log(mensaje);
 
 
