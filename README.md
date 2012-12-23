@@ -1,7 +1,11 @@
 consilience-test
 ================
 
-no rush, no presure and don't panic!
+no rush, no presure and don't be panic!
+
+Feature explanations in 
+https://github.com/juanantonioruz/consilience-test/wiki 
+
 
 Instructions to run from console. 
 ========================
@@ -13,3 +17,5 @@ Instructions to run from console.
 2- $ cd consilience-test
 
 3- $ node test.js
+
+
