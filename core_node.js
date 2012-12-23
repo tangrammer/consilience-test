@@ -4,7 +4,6 @@ exports.load_js_client=function(context, path_lib, method_names, subcontext){
         if(typeof subcontext !== "undefined"){
             for(var v in subcontext){
                 this[v]=subcontext[v];
-                console.log(v+"="+this[v]);
             }
         }
         eval(fs.readFileSync(path_lib,'utf8'));

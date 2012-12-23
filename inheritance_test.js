@@ -26,12 +26,15 @@ log("--------->>>>>>"+$persons.webmaster);
 var person=$persons.create_person($persons.data_person_example);
 
 var person_i18n=$persons.internationalize(person);
-var person_i18n_bis=$persons.internationalize($persons.create_person({id: 1, DOB: "1999-07-23", wage:150, fname: "PEPE"}));
+var other_person=$persons.create_person({id: 5,  DOB: "1999-07-23", wage:150, fname: "PEPE"});
+var person_i18n_bis=$persons.internationalize(other_person);
 
 $persons.invoke_i18n_methods(person);
 
 $persons.invoke_i18n_methods(person_i18n);
 $persons.set_locale("AU");
 $persons.invoke_i18n_methods(person_i18n);
+$persons.invoke_i18n_methods(person_i18n_bis);
+
 
 

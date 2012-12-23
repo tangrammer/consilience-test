@@ -12,12 +12,13 @@ var data_person_example={
 
 
 function Person(){
-    getters(Person, ["id", "fname", "lname", "DOB", "wage", "location"]);
+    getters(this, ["id", "fname", "lname", "DOB", "wage", "location"]);
 };
 
 function create_person(spec){
     var p=new Person();
     init(p, spec);
+// converting p.DOB from string value to date value 
     p.DOB=new Date(p.DOB);
     return p;
 }
