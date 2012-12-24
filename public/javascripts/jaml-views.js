@@ -5,13 +5,44 @@ var names_id={
     __welcome_div:".welcome", 
     person_edit_anchor:"person_edit",
     person_del_anchor:"person_remove",
+   person_insert_anchor:"person_insert",
     attr_person_id:"person_id"
 
 };
 
 Jaml.register('person_edit', function(person) {
     div({cls: 'person'},
-        h1("Edit Person Detail "),
+        h1("Edit Person: "+person.get_fname()+" "+person.get_lname()),
+        form({id:"person_edit"},
+            input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
+            label({for: 'fname'}, "First Name: "),
+            input({type: 'text', name: 'fname', id: 'fname', value: person.get_fname()}),
+            br(),
+            label({for: 'lname'}, "Last Name: "),
+            input({type: 'text', name: 'lname', id: 'lname', value: person.get_lname()}),
+            br(),
+            label({for: 'DOB'}, "Date Of Birth: "),
+            input({type: 'text', name: 'DOB', id: 'DOB', value: person.get_DOB()}),
+            br(),
+            label({for: 'wage'}, "Wage: "),
+            input({type: 'text', name: 'wage', id: 'wage', value: person.get_wage()}),
+            br(),
+            label({for: 'location'}, "Location: "),
+            select({name: 'location', id: 'location'},
+                  option({value:'US'}, 'US'),
+                  option({value:'UK'}, 'UK'),
+                  option({value:'AU'}, 'AU')
+                 ),
+            br(),
+            input({type: 'submit', value: 'Edit', onclick:'edit_person()'})
+        )
+       );
+
+});
+
+Jaml.register('person_new', function(person) {
+    div({cls: 'person'},
+        h1("Inserting New Person "),
         form(
             input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
             label({for: 'fname'}, "First Name: "),
@@ -27,7 +58,11 @@ Jaml.register('person_edit', function(person) {
             input({type: 'text', name: 'wage', id: 'wage', value: person.get_wage()}),
             br(),
             label({for: 'location'}, "Location: "),
-            input({type: 'text', name: 'location', id: 'location', value: person.get_location()}),
+            select({name: 'location', id: 'location'},
+                  option({value:'US'}, 'US'),
+                  option({value:'UK'}, 'UK'),
+                  option({value:'AU'}, 'AU')
+                 ),
             br(),
             input({type: 'submit', value: 'Edit'})
         )
@@ -35,9 +70,9 @@ Jaml.register('person_edit', function(person) {
 
 });
 
-Jaml.register('person_show', function(person) {
+Jaml.register('person_show_base', function(person) {
     div({cls: 'person'},
-        h1("Person Detail "),
+        
         label({for: 'fname'}, "First Name: "),
         span( person.get_fname()),
         br(),
@@ -53,11 +88,7 @@ Jaml.register('person_show', function(person) {
         label({for: 'location'}, "Location: "),
         span( person.get_location()),
         br()
-
-
-                
        );
-
 });
 
 
@@ -81,14 +112,27 @@ Jaml.register('person_remove', function(person) {
 
 });
 
+Jaml.register('person_edited', function(person) {
+    div(
+        h1({cls:'result_action'},'Edition Correct!'),
+           Jaml.render('person_show_base', person));
+});
+Jaml.register('person_show', function(person) {
+    div(
+        h1({cls:'result_action'}, "Show Person: "+person.get_fname()+" "+person.get_lname()),
+
+           Jaml.render('person_show_base', person));
+});
+
+
 
 
 Jaml.register('languages', function(lang){
     hr(),
     div({cls:"languages" },
-        a({cls:'US'==lang?'selected':'', href:'#',onclick:"localize(&#39;US&#39;);"}, 'US'),
-        a({cls:'UK'==lang?'selected':'',href:'#', onclick:"localize(&#39;UK&#39;);"}, 'UK'),
-        a({cls:'AU'==lang?'selected':'',href:'#', onclick:"localize(&#39;AU&#39;);"}, 'AU'))
+        a({cls:'US'==lang?'selected':'', href:'#'}, 'US'),
+        a({cls:'UK'==lang?'selected':'',href:'#'}, 'UK'),
+        a({cls:'AU'==lang?'selected':'',href:'#'}, 'AU'))
    
 });
 Jaml.register('person_link', function(person){
@@ -105,7 +149,9 @@ Jaml.register('widget', function(p) {
     div(
         ul({cls:"ul_persons"},
            Jaml.render('person_link', p.persons)
-          )
+
+          ),
+           a({cls: names_id.person_insert_anchor, href: '#', onclick:'new_person();' }, 'Add Person')
     ),
  div(Jaml.render('languages', PersonLocalized.prototype.lang));
 });
@@ -116,7 +162,7 @@ Jaml.register('intro', function(){
         p(
             span("Welcome, from this page you can edit the info related to persons. Use the right sidebar to select an existent row or add a new one"),
             br(),
-        a({cls: names_id.person_insert_anchor, href: '#' }, 'Add Person')
+        a({cls: names_id.person_insert_anchor, href: '#', onclick:'new_person();' }, 'Add Person')
 )
     );
 });

@@ -136,6 +136,11 @@ header {
 .person_lname {
   color: #f00;
 }
+h1.result_action {
+  color: #fa5b4d;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
 h1.intro {
   color: #fa5b4d;
   font-size: 25px;
@@ -166,6 +171,15 @@ a:hover {
   background-color: #faf9f0;
 }
 .ul_persons li a:hover {
+  color: #faf9f0;
+  background-color: #fa5b4d;
+}
+a.person_insert {
+  margin-left: 15px;
+  color: #fa5b4d;
+  background-color: #faf9f0;
+}
+a.person_insert:hover {
   color: #faf9f0;
   background-color: #fa5b4d;
 }

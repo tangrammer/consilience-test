@@ -22,7 +22,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-//  app.use(express.session({ secret: 'this is a secret' }));
+  app.use(express.session({ secret: 'this is a secret' }));
   app.use(stylus.middleware({
       src: __dirname + '/public',
       compile: compile
@@ -35,6 +35,7 @@ app.configure(function(){
 var persons = require('./routes/persons');
 app.get('/persons', persons.find_all);
 app.get('/persons/:id', persons.find_by_id);
+app.post('/persons', persons.add_new);
 //app.get('/persons.json/:id', persons.find_by_id_json);
 app.get('/', 
         function(req, res){

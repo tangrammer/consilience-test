@@ -4,7 +4,7 @@
 
 var date_formats={
  US: "mm/dd/yy",
- UK: "dd/dd/yy",
+ UK: "dd/mm/yy",
  AU: "dd/mm/yy"
 };
 
