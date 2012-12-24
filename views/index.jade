@@ -4,22 +4,18 @@ block more_js
  script(src="/javascripts/core.js")
  script(src="/javascripts/i18n.js")
  script(src="/javascripts/persons.js")
+ script(src="/javascripts/jaml-views.js")
 
 block content
       .welcome
        p
         | The point of this assessment is demonstrate skills with JS, JSON, XML and basic RESTful interaction. 
         p    
-        a(href='#', onclick='start();') start 
+        a(href='#', onclick='start_intro();') start 
         
 block sidebar
   .widget(style='display:none')
-      a(href='#', onclick='localize("US");') US 
-      -
-      a(href='#', onclick='localize("UK");') UK 
-      -
-      a(href='#', onclick='localize("AU");') AU 
-      hr
+     
       a(href='#', onclick='basic_person();') person 
       br
       a(href='#', onclick='i18n_person();') person_i18n 

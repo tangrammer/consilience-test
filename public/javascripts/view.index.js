@@ -28,6 +28,16 @@ function load_person(id){
     });
 };
 
+function start_intro(){
+    $.ajax({
+        url: "/persons",
+        cache: false
+    }).done(function( html ) {
+        start_intro_html(html);
+
+    });
+};
+
 function apply_binding(){
 
 $(names_id._person_detail_anchor).bind({
@@ -44,51 +54,20 @@ $(names_id._person_edit_anchor).bind({
     }
 });
 }
-Jaml.register('person', function(person) {
-  div({cls: 'person'},
-    h1(person.fname),
-    form(
-      label({for: 'fname'}, "Quantity"),
-      input({type: 'text', name: 'fname', id: 'fname', value: person.get_id()}),
-      br(),
-      label({for: 'DOB'}, "DOB"),
-      input({type: 'text', name: 'DOB', id: 'DOB', value: person.get_DOB()}),
-      br(),
-      input({type: 'submit', value: 'Edit'})
-    )
-  );
-
-});
-
-Jaml.register('simple', function() {
-  div(
-    h2("Static List"),
-          a({cls: 'person_detail', href: '#', person_id:1}, 'Load person 1'),
-
-    p("Some exciting paragraph text"),
-    br(),
-
-    ul(
-      li("First item"),
-      li("Second item"),
-      li("Third item")
-    )
-  );
-});
-
-function start(){
-    $(".widget").prepend(Jaml.render('simple'));
-        apply_binding();
-    $(".widget").prepend("<h1>TEST START</h1>");
-    $(".widget").fadeIn("slow", function(){});
 
 
-//    basic_person();
 
 
- prepare_main_div();
-    include_main_div("<h1>Select one option from the side bar</h1>");
-
+function start_intro_html(persons){
+    var ps=[];
+   for(var i =0; i<persons.length; i++){
+    ps.push(internationalize(create_person(persons[i])));
+}
+    $(".main-content").html(Jaml.render('intro'));
+    $(".widget").html(Jaml.render('widget', {persons: ps}));
+       apply_binding();
+//    $(".widget").fadeIn("slow", function(){});
+    $('.widget').show();
 }
 
 function print_person(p){
@@ -117,7 +96,7 @@ function i18n_person(){
 function localize(lang_){
     console.log(person_selected);
     set_locale(lang_);
-    print_person(person_selected);
+    //print_person(person_selected);
 }
 
 

@@ -30,7 +30,7 @@ header
   padding 50px 10px
   color #fff
   font-size 25px
-  text-align center
+  margin-left 100px
 
   /*
    * Note the use of the `main-color`
@@ -41,20 +41,44 @@ header
   text-shadow 0px -1px 0px darken(main-color, 30%)
 
 .container
-  width 500px
+
   margin 50px auto
+  margin-left 150px
   overflow hidden
 
 .main-content
   float left
-  width 300px
+  width 500px
 
   p
     margin-bottom 20px
 
 .person_lname
   color red
-
+a
+        color main-color
+        text-decoration none
+a:hover
+        text-decoration underline
+        color black
+.ul_persons
+        margin 10px
+.languages
+        margin 10px
+        a
+          color main-color
+          background-color background-color
+        :hover
+          color main-color
+          background-color background-color
+         a.selected
+          color background-color
+          background-color main-color
+         a.selected:hover
+          color main-color
+          background-color background-color
+          text-decoration none
+ 
 .sidebar
   float left
   width 200px
@@ -89,8 +113,9 @@ p
   line-height 1.8
 
 footer
-  width 500px
+  
   margin 50px auto
+  margin-left 100px
   border-top 1px dotted #ccc
   padding-top 5px
   font-size 13px
