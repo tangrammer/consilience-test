@@ -66,28 +66,5 @@ log(mensaje);
 
 
 
-function write_data(data, url_data, write_callback){
-//function write_callback(err) { if (err) throw err; console.log('It\'s saved!');}
-    fs.writeFile('./data/new_'+data.id+'.txt', xml_data, write_callback);
-}
-
-function generate_id_person(){
-var id_counter=1;
-var filename='./data/counter.txt';
-
-var counter_file=fs.readFileSync(filename);
-    console.log(counter_file);
-    if(!counter_file){
-        fs.writeFileSync(filename, id_counter);
-        return id_counter;
-    }else{
-        counter_file++;
-        fs.writeFileSync(filename, counter_file);
-       return counter_file;
-    }
-    
-}
-
-
 
 
