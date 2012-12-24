@@ -31,6 +31,12 @@ function PersonLocalized(){
     this.get_wage=function(){
         return wage_printer[this.lang].call(this);
     };
+
+    this.get_wage_symbol=function(){
+        return wage_symbol_printer[this.lang]();
+    };
+    
+
 };
 
 PersonLocalized.prototype=new Person();

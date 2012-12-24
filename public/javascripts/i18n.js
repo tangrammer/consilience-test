@@ -17,8 +17,14 @@ var date_printer={
 
 var wage_printer={
         //US = United States, UK = United Kingdom, AU = Australia
-    US: function(){return "$"+this.wage;},
-    UK: function(){return "£"+this.wage;},
-    AU: function(){return "$"+this.wage;}
+    US: function(){return ""+this.wage;},
+    UK: function(){return ""+this.wage;},
+    AU: function(){return ""+this.wage;}
 };
 
+var wage_symbol_printer={
+        //US = United States, UK = United Kingdom, AU = Australia
+    US: function(){return "$";},
+    UK: function(){return "£";},
+    AU: function(){return "$";}
+};

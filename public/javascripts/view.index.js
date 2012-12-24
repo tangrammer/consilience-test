@@ -29,23 +29,31 @@ function localize_form(){
   
 }
 
-function edit_person(){
+function action_person(spec){
     var options = { 
-        type: 'post', url: '/persons', 
-beforeSubmit: function(arr, $form, options) { 
-    alert($("#wage").val());
-    
-    // return false to cancel submit                  
-},
-        success:    function(html) { 
-            include_main_div(Jaml.render('person_edited', 
-                                         internationalize(create_person(html))
-                                        ));
+        type: spec.type, url: spec.url,
+        beforeSubmit: function(arr, $form, options) { 
+            // alert($("#wage").val());
+             // return false to cancel submit                  
+        },
+        success: function(html) { 
+            include_main_div(Jaml.render(spec.template,  internationalize(create_person(html))));
             load_ajax_persons(function(h){sidebar_persons_list(h);});
         } 
     }; 
-    $("#person_edit").ajaxForm(options) ; 
+    $(spec.form).ajaxForm(options) ; 
+
+
 }
+
+function edit_person(){
+    action_person({action:'edit', type:'post',url:'/persons', template:'person_edited', form:'#person_edit'});
+}
+
+function insert_person(){
+    action_person({action:'xxx', type:'post',url:'/persons', template:'person_created', form:'#person_edit'});
+}
+
 
 function new_person(){
     last_action_selected='new';

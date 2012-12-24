@@ -34,7 +34,7 @@ Jaml.register('person_edit', function(person) {
                   option({value:'AU'}, 'AU')
                  ),
             br(),
-            input({type: 'submit', value: 'Edit', onclick:'edit_person()'})
+            input({type: 'submit', value: 'Edit', onclick:'edit_person();'})
         )
        );
 
@@ -43,7 +43,7 @@ Jaml.register('person_edit', function(person) {
 Jaml.register('person_new', function(person) {
     div({cls: 'person'},
         h1("Inserting New Person "),
-        form(
+   form({id:"person_edit"},
             input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
             label({for: 'fname'}, "First Name: "),
             input({type: 'text', name: 'fname', id: 'fname', value: person.get_fname()}),
@@ -54,7 +54,7 @@ Jaml.register('person_new', function(person) {
             label({for: 'DOB'}, "Date Of Birth: "),
             input({type: 'text', name: 'DOB', id: 'DOB', value: person.get_DOB()}),
             br(),
-            label({for: 'wage'}, "Wage: "),
+            label({for: 'wage'}, "Wage: "+person.get_wage_symbol()),
             input({type: 'text', name: 'wage', id: 'wage', value: person.get_wage()}),
             br(),
             label({for: 'location'}, "Location: "),
@@ -64,7 +64,7 @@ Jaml.register('person_new', function(person) {
                   option({value:'AU'}, 'AU')
                  ),
             br(),
-            input({type: 'submit', value: 'Edit'})
+            input({type: 'submit', value: 'Edit', onclick:'insert_person();'})
         )
        );
 
@@ -117,6 +117,12 @@ Jaml.register('person_edited', function(person) {
         h1({cls:'result_action'},'Edition Correct!'),
            Jaml.render('person_show_base', person));
 });
+Jaml.register('person_created', function(person) {
+    div(
+        h1({cls:'result_action'},'Inserting Correct!'),
+           Jaml.render('person_show_base', person));
+});
+
 Jaml.register('person_show', function(person) {
     div(
         h1({cls:'result_action'}, "Show Person: "+person.get_fname()+" "+person.get_lname()),

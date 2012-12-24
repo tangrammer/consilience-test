@@ -1,4 +1,4 @@
-var fs = require('fs'),  xml2js = require('xml2js'), sys=require('sys');
+var fs = require('fs'),  xml2js = require('xml2js'), sys=require('sys'), jstoxml=require('jstoxml');
 
 function person_details (result){
     var person=result.person;
@@ -25,6 +25,33 @@ function create_parser(){
    
 }
 }
+
+
+
+function write_data(data, write_callback){
+//function write_callback(err) { if (err) throw err;
+    //console.log('It\'s saved!');}
+var xml_data=jstoxml.toXML(data);
+    fs.writeFile('./data/'+data.person.id+'.xml', xml_data, write_callback);
+}
+
+function generate_id_person(){
+var id_counter=1;
+var filename='./data/counter.txt';
+
+var counter_file=fs.readFileSync(filename);
+    console.log(counter_file);
+    if(!counter_file){
+        fs.writeFileSync(filename, id_counter);
+        return id_counter;
+    }else{
+        counter_file++;
+        fs.writeFileSync(filename, counter_file);
+       return counter_file;
+    }
+    
+}
+
 
 function req_res_base(req, res){
    return {
@@ -65,26 +92,11 @@ var  find_by_id=function(req, res){
 
 exports.add_new=function(req, res){
     console.log(req.body);
-     var mi_parser=create_parser();    
-
-    function target_data(result){
-        var model=person_details(result);
-//plain response
-            res.send(model);
-//jade response
-        //    res.render('person', model);
-    };
+    var new_id=generate_id_person();
+    req.body.id=new_id;
+    write_data({person:req.body}, function(err) { if (err) throw err; res.send(req.body);});
 
 
-
-    mi_parser.read_data(1, target_data);
-/*    function_inheritance(req_res_base, this, arguments);
-    var person_id=req.params.id;    
-    console.log(person_id);
-
-   */ 
-
-//    res.send(data_person_example);
 }
 
 exports.find_by_id=find_by_id;
