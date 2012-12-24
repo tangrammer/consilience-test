@@ -1,22 +1,26 @@
 extend layout
 block more_js
+ script(src="/javascripts/date_format.js")
  script(src="/javascripts/core.js")
  script(src="/javascripts/i18n.js")
  script(src="/javascripts/persons.js")
+
 block content
       .welcome
-        p
+       p
         | The point of this assessment is demonstrate skills with JS, JSON, XML and basic RESTful interaction. 
         p    
         a(href='#', onclick='start();') start 
         
-
 block sidebar
   .widget(style='display:none')
-    h1 Persons List
-    p
-        a.person_detail(href='#', person_id=1) load person 1 
-        a.person_edit(href='#', person_id=1) [edit]
-        br
-        a.person_detail(href='#', person_id=2) load person 2
-        a.person_edit(href='#', person_id=2) [edit]    
+      a(href='#', onclick='localize("US");') US 
+      -
+      a(href='#', onclick='localize("UK");') UK 
+      -
+      a(href='#', onclick='localize("AU");') AU 
+      hr
+      a(href='#', onclick='basic_person();') person 
+      br
+      a(href='#', onclick='i18n_person();') person_i18n 
+     

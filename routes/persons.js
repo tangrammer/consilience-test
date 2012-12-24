@@ -1,19 +1,8 @@
-var person_juan={
-    person:{
-    id: 1,
-    fname: "Static Juan",
-    lname: "Ruz",
-   DOB: "1976-06-13",
-    wage: 100,
-    location: "ES"
-}
-};
-
 var fs = require('fs'),  xml2js = require('xml2js'), sys=require('sys');
 
 function person_details (result){
     var person=result.person;
-        return {id: person.id, fname : person.fname, lname: person.lname};
+        return person;
 }
 
 function create_parser(){
@@ -62,9 +51,10 @@ var  find_by_id=function(req, res){
 
     function target_data(result){
         var model=person_details(result);
-            res.send({person: model});
-
-      //  print_result(person_details(result));
+//plain response
+            res.send(model);
+//jade response
+        //    res.render('person', model);
     };
 
 
@@ -91,29 +81,3 @@ exports.find_all=function (req, res) {
    create_parser().read_data(1, addResult);
 };
 
-
-
-
-
-
-
-
-
-
-
-
-// TESTING SOME IDEAS
-
-
-function prueba_method_call_use_context(){
-var x = 10;
-var o = { x: 15 };
-function f(message)
-{
-    console.log(message);
-    console.log(this.x);
-}
-
-f("invoking f**************");
-f.call(o, "invoking f via call*************");
-}
