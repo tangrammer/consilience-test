@@ -1,12 +1,12 @@
 // this file use ./core.js and ./i18n.js
 var data_person_example={
-        id: 1,
-        fname: "Juan Antonio",
-        lname: "Ruz",
-        DOB: "1976-06-13",
-        wage: 100,
+    id: 1,
+    fname: "Juan Antonio",
+    lname: "Ruz",
+    DOB: "1976-06-13",
+    wage: 100,
     location:"US"
-    };
+};
 
 
 function Person(){
@@ -22,7 +22,7 @@ function create_person(spec){
 }
 
 function PersonLocalized(){
-    this.get_fname=function(){return "i18n_ "+this.fname};
+//    this.get_fname=function(){return "i18n_ "+this.fname};
 
     this.get_DOB=function(){
         return date_printer[this.lang].call({date:this.DOB});

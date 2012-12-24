@@ -1,30 +1,40 @@
-var names_id={
-    _main_content_div:".main-content",
-    _person_detail_anchor:".person_detail",
-    __welcome_div:".welcome", 
-    _person_edit_anchor:".person_edit",
-    attr_person_id:"person_id"
+var person_selected, last_action_selected;
+
+function fade_info(info, div, on_end){
+   $(div)
+        .html("<br>Loading")
+        .fadeOut("slow", function(){
+        $(this).html(info+"<br>")
+        .fadeIn("slow", on_end );});
+
+}
+
+function include_main_div(result, ff){
+    fade_info(result, names_id._main_content_div, ff);
+}
+function include_widget_div(result, ff){
+    fade_info(result, names_id._widget_div, ff);
+}
+
+var action_mapper={
+    edit: "person_edit",
+    show: "person_show",
+    remove: "person_remove",
+    new: "person_new"
 };
 
-var person_selected;
-function prepare_main_div(){
-    $(names_id._main_content_div).empty();
-}
 
-function include_main_div(html){
-    $(names_id._main_content_div).append(html+"<br>");
-}
-function load_person(id){
-    $.ajax({
+function load_person(id, action){
+
+  $.ajax({
         url: "/persons/"+id,
         cache: false
     }).done(function( html ) {
-        prepare_main_div();
-        person_selected=internationalize(create_person(html));
-        include_main_div(Jaml.render('person', person_selected));
-    addDatePicker("#DOB");
-//        print_person(person_selected);
 
+        person_selected=internationalize(create_person(html));
+        last_action_selected=action;
+        include_main_div(Jaml.render(action_mapper[action], person_selected));
+        addDatePicker("#DOB");
     });
 };
 
@@ -39,64 +49,42 @@ function start_intro(){
 };
 
 function apply_binding(){
+$("."+names_id.person_detail_anchor).bind({
+    click: function(e) {
+        load_person($(e.target).attr(names_id.attr_person_id), 'show');
+        e.preventDefault();
+    }
+});
+$("."+names_id.person_edit_anchor).bind({
+    click: function(e) {
+        load_person($(e.target).attr(names_id.attr_person_id),'edit');
+        e.preventDefault();
+    }
+});
+$("."+names_id.person_del_anchor).bind({
+    click: function(e) {
+        load_person($(e.target).attr(names_id.attr_person_id),'remove');
+        e.preventDefault();
+    }
+});
 
-$(names_id._person_detail_anchor).bind({
-    click: function(e) {
-        //      console.dir($(e.target));
-        load_person($(e.target).attr(names_id.attr_person_id));
-        e.preventDefault();
-    }
-});
-$(names_id._person_edit_anchor).bind({
-    click: function(e) {
-        load_person($(e.target).attr(names_id.attr_person_id));
-        e.preventDefault();
-    }
-});
 }
 
 
-
-
 function start_intro_html(persons){
+
     var ps=[];
    for(var i =0; i<persons.length; i++){
     ps.push(internationalize(create_person(persons[i])));
 }
-    $(".main-content").html(Jaml.render('intro'));
-    $(".widget").html(Jaml.render('widget', {persons: ps}));
-       apply_binding();
-//    $(".widget").fadeIn("slow", function(){});
-    $('.widget').show();
+    include_main_div(Jaml.render('intro'));
+    include_widget_div(Jaml.render('widget',{persons: ps}), apply_binding);
 }
 
-function print_person(p){
-    prepare_main_div();
-    include_main_div("FNAME: "+p.get_fname());
-    include_main_div("WAGE : "+p.get_wage());
-    include_main_div("DOB : "+p.get_DOB());
-}
-
-function basic_person(){
-    
-    person_selected=create_person(data_person_example);
-    print_person(person_selected);
-    
-}
-
-
-
-function i18n_person(){
-    
-    person_selected=internationalize(create_person(data_person_example));
-    print_person(person_selected);
-    
-    
-}
 function localize(lang_){
-    console.log(person_selected);
     set_locale(lang_);
-    //print_person(person_selected);
+    start_intro();
+    if(person_selected!=='undefined') load_person(person_selected.get_id(), last_action_selected);
 }
 
 

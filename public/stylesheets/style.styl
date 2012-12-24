@@ -19,6 +19,15 @@ global-reset()
  */
 main-color = #fa5b4d
 background-color = #faf9f0
+margin-base = 20px
+
+a_selected()
+  color background-color
+  background-color main-color
+
+a_unselected()
+  color main-color
+  background-color background-color
 
 body
   font-family 'Georgia'
@@ -55,6 +64,19 @@ header
 
 .person_lname
   color red
+
+myh1()
+  color main-color
+  font-size 25px      
+  margin-bottom margin-base 
+    
+
+h1.intro
+    myh1()
+.person
+  h1
+    myh1()
+
 a
         color main-color
         text-decoration none
@@ -62,22 +84,28 @@ a:hover
         text-decoration underline
         color black
 .ul_persons
-        margin 10px
+  margin 25px
+  li
+    list-style-type disc
+    margin-bottom 10px
+    a
+      a_unselected()
+    a:hover
+      a_selected()
+
+
+
 .languages
         margin 10px
         a
-          color main-color
-          background-color background-color
+           a_unselected()
         :hover
-          color main-color
-          background-color background-color
+           a_selected()
          a.selected
-          color background-color
-          background-color main-color
+           a_selected()
          a.selected:hover
-          color main-color
-          background-color background-color
-          text-decoration none
+           a_unselected()
+           text-decoration none
  
 .sidebar
   float left
@@ -103,7 +131,7 @@ a:hover
       border-bottom 1px dotted #ddd
       border-radius 2px 2px 0px 0px
       margin-bottom 10px
-
+      font-size 20px
     p
       font-size 13px
       padding 0px 10px
@@ -113,9 +141,10 @@ p
   line-height 1.8
 
 footer
-  
   margin 50px auto
   margin-left 100px
   border-top 1px dotted #ccc
   padding-top 5px
   font-size 13px
+  p
+    margin-left 50px

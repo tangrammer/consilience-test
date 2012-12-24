@@ -10,15 +10,15 @@ var date_formats={
 
 var date_printer={
         //US = United States, UK = United Kingdom, AU = Australia
-    US: function(){return "US: "+this.date.format(date_formats.US);},
-    UK: function(){return "UK: "+this.date.format(date_formats.UK);},
-    AU: function(){return "AU: "+this.date.format(date_formats.AU);}
+    US: function(){return this.date.format(date_formats.US);},
+    UK: function(){return this.date.format(date_formats.UK);},
+    AU: function(){return this.date.format(date_formats.AU);}
 };
 
 var wage_printer={
         //US = United States, UK = United Kingdom, AU = Australia
-    US: function(){return "US: $"+this.wage;},
-    UK: function(){return "UK: £"+this.wage;},
-    AU: function(){return "AU: $"+this.wage;}
+    US: function(){return "$"+this.wage;},
+    UK: function(){return "£"+this.wage;},
+    AU: function(){return "$"+this.wage;}
 };
 
