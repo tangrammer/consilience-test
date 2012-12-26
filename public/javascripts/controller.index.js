@@ -19,6 +19,9 @@ var contexts={
         }
     },
     ui:{
+        form_remove: function(){
+            delete_person();
+        },
         binding_languages:function(){
             $(".languages > a").bind({
                 click: function(e) {
@@ -71,6 +74,7 @@ var contexts={
             }
             this.contexts.dao_ajax.person(id, _caller);
         },
+       
         list:function(apply_function){
             var _caller= function( persons ) {
                 var ps=[];

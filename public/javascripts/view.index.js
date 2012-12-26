@@ -38,7 +38,9 @@ function action_person(spec){
         },
         success: function(html) { 
             include_main_div(Jaml.render(spec.template,  internationalize(create_person(html))));
-            //TODO load_ajax_persons(function(h){sidebar_persons_list(h);});
+            if(spec.on_end!==undefined){
+               spec.on_end.call(this);
+            }
         } 
     }; 
     $(spec.form).ajaxForm(options) ; 
@@ -53,7 +55,10 @@ function edit_person(){
 function insert_person(){
     action_person({action:'xxx', type:'post',url:'/persons', template:'person_created', form:'#person_edit'});
 }
-
+function delete_person(){
+    action_person({action:'xxx', type:'delete',url:'/persons/'+$('#id').val(), template:'person_removed', form:'#person_edit', 
+                   on_end: function(){my_apply("person.list", "widget", ".sidebar");} });
+}
 
 function new_person(){
     last_action_selected='new';

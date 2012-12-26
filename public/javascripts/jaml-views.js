@@ -9,7 +9,6 @@ var names_id={
     attr_person_id:"person_id"
 
 };
-
 Jaml.register('person_edit', function(person) {
     div({cls: 'person'},
         h1("Edit Person: "+person.get_fname()+" "+person.get_lname()),
@@ -101,7 +100,7 @@ Jaml.register('person_remove', function(person) {
         label({for: 'lname'}, "Last Name: "),
         span( person.get_lname()),
         br(),
-        form(
+        form({id:"person_edit"},
             input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
             input({type: 'submit', value: 'REMOVE'})
         )
@@ -111,6 +110,13 @@ Jaml.register('person_remove', function(person) {
        );
 
 });
+Jaml.register('person_removed', function() {
+    div(
+        h1({cls:'result_action'},'Person removed Correctly!')
+)
+           
+});
+
 
 Jaml.register('person_edited', function(person) {
     div(
@@ -144,8 +150,8 @@ Jaml.register('languages', function(lang){
 Jaml.register('person_link', function(person){
     li(span(person.get_fname()+" "+person.get_lname()) ,
        a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_show', '.main-content');"}, 'show'),
-       a({cls: names_id.person_edit_anchor, href: '#', person_id:person.get_id()}, 'edit'),
-       a({cls: names_id.person_del_anchor, href: '#', person_id:person.get_id()}, 'del')
+       a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_edit', '.main-content');"}, 'edit'),
+       a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_remove', '.main-content', 'ui.form_remove');"}, 'del')
 )
 });
 

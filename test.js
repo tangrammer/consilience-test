@@ -35,6 +35,9 @@ app.configure(function(){
 var persons = require('./routes/persons');
 app.get('/persons', persons.find_all);
 app.get('/persons/:id', persons.find_by_id);
+app.delete('/persons/:id', persons.delete_by_id);
+
+//app.delete('/persons', persons.delete_all);
 app.post('/persons', persons.add_new);
 //app.get('/persons.json/:id', persons.find_by_id_json);
 app.get('/', 
@@ -52,17 +55,6 @@ app.listen(port);
 var mensaje="server is  listening in "+port;
 log(mensaje);
 
-
-
-/*
- - Create a webpage primarily using JavaScript that throw an personalized object
-- implements the basic logic for interacting with the xml resource - load/save/create new/etc  (it's okay to use an AJAX library for the actual data exchange)
-- synchs member attributes with the fields of the resource
-- has methods to translate the DOB (date of birth) and wage into formats appropriate for the location; using Functional Programming (not using IF/switch statements)
-- Uses prototypes and closures to rebuild the object when the location changes, modifying/replacing methods. 
- 
-- Uses an open source JS library to generate the user interface.
-*/
 
 
 
