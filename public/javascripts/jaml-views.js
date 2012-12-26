@@ -143,7 +143,7 @@ Jaml.register('languages', function(lang){
 });
 Jaml.register('person_link', function(person){
     li(span(person.get_fname()+" "+person.get_lname()) ,
-       a({cls: names_id.person_detail_anchor, href: '#', person_id:person.get_id()}, 'show'),
+       a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_show', '.main-content');"}, 'show'),
        a({cls: names_id.person_edit_anchor, href: '#', person_id:person.get_id()}, 'edit'),
        a({cls: names_id.person_del_anchor, href: '#', person_id:person.get_id()}, 'del')
 )

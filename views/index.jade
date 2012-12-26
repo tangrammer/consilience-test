@@ -5,13 +5,13 @@ block more_js
  script(src="/javascripts/i18n.js")
  script(src="/javascripts/persons.js")
  script(src="/javascripts/jaml-views.js")
-
+ script(src="/javascripts/controller.index.js")
 block content
       .welcome
        p
         | The point of this assessment is demonstrate skills with JS, JSON, XML and basic RESTful interaction. 
         p    
-        a(href='#', onclick='start_intro();') start 
+        a(href='#', onclick='my_apply("welcome.intro", "intro", ".main-content");my_apply("person.list", "widget", ".sidebar");' ) start cms persons 
         
 block sidebar
   .widget(style='display:none;')
