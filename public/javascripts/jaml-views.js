@@ -162,7 +162,7 @@ Jaml.register('widget', function(p) {
   //if(p)
     h1('Person List'),
     div(
-        ul({cls:"ul_persons"} //Jaml.render('person_link', p.persons)
+        ul({cls:"ul_persons"}, Jaml.render('person_link', p.persons)
           ),
            a({cls: names_id.person_insert_anchor, href: '#', onclick:'new_person();' }, 'Add Person')
     ),

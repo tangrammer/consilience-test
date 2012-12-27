@@ -138,12 +138,18 @@ exports.find_all=function (req, res) {
     }
     fs.readdir(__dirname, function(err, files){
         read_files(files, function(){ contador++; });
+        if(contador>0){
         read_files(files, function(){
             var name=this.file_in.replace(".xml", "");
             create_parser().read_data(name, addResult);
 
         }
+        
+         
                   );
+            }else{
+                res.send({});
+            }
 
     }); 
     

@@ -98,8 +98,7 @@ var contexts={
                     ps.push(internationalize(create_person(persons[i])));
                 }
                 ps={persons:ps};
-                alert("listttt");
-                apply_function.call({result:ps});
+                              apply_function.call({result:ps});
             };
             this.contexts.dao_ajax.persons(_caller);
         }
@@ -140,7 +139,7 @@ function check_dom_element(the_element){
 
 
 function smoth_paint(e, r, on_end){
-    alert(e);
+   
     e
         .html("<br>Loading")
         .fadeOut("slow", function(){

@@ -58,7 +58,7 @@ function insert_person(){
 function delete_person(){
     action_person({action:'xxx', type:'delete',url:'/persons/'+$('#id').val(), template:'person_removed', form:'#person_edit', 
                    on_end: function(){
-                       alert('llamada');
+
                        my_apply("person.list", "widget", ".sidebar");
     my_apply("general.message('PERSON REMOVED!')", "message", ".main-content");
                    
