@@ -34,10 +34,10 @@ function action_person(spec){
         type: spec.type, url: spec.url,
         beforeSubmit: function(arr, $form, options) { 
             // alert($("#wage").val());
-             // return false to cancel submit                  
+            // return false to cancel submit                  
         },
         success: function(html) { 
-            include_main_div(Jaml.render(spec.template,  internationalize(create_person(html))));
+          //  include_main_div(Jaml.render(spec.template,  internationalize(create_person(html))));
             if(spec.on_end!==undefined){
                spec.on_end.call(this);
             }
@@ -57,7 +57,13 @@ function insert_person(){
 }
 function delete_person(){
     action_person({action:'xxx', type:'delete',url:'/persons/'+$('#id').val(), template:'person_removed', form:'#person_edit', 
-                   on_end: function(){my_apply("person.list", "widget", ".sidebar");} });
+                   on_end: function(){
+                       alert('llamada');
+                       my_apply("person.list", "widget", ".sidebar");
+    my_apply("general.message('PERSON REMOVED!')", "message", ".main-content");
+                   
+                   } 
+                  });
 }
 
 function new_person(){

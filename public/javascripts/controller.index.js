@@ -2,14 +2,28 @@ function templating(template, model){
     return Jaml.render(template, model);
 }
 var contexts={
+    ajax:{
+        form:function (spec){
+            alert("ajax_form");
+            var options = { 
+                type: spec.type, 
+                url: spec.url,
+                //  beforeSubmit: function(arr, $form, options) {  // alert($("#wage").val());       // return false to cancel submit       // },
+                success: function(html) { 
+                    if(spec.on_end!==undefined){
+                        spec.on_end.call(this);
+                    }
+                }
+            };
+            $(spec.form).ajaxForm(options) ; 
+        },
+        form_remove:function(_on_end){
+            contexts.ajax.form({form:"person_edit", type:"delete", url:"/persons/", on_end: _on_end});
+        }
+    },
     dao_ajax:{
         ajax:function(_url,caller){
-            $.ajax({
-                url: _url,
-                cache: false
-            }).done(
-                caller
-            );
+            $.ajax({url: _url, cache: false}).done(caller);
         },
         persons:function(caller){
             this.ajax('/persons', caller);              
@@ -55,13 +69,16 @@ var contexts={
         }
     },
     general:{
-        hw:function(){
-            return "Hello World";
-        }
+        hw:function(apply_function){
+            return apply_function.call({result:"Hello World"});  
+
+        },
+        message:function(message, apply_function){
+            return apply_function.call({result:message});  
+        },
     },
     welcome:{
         intro: function(apply_function){
-            
             return apply_function.call({});
         }
     },
@@ -72,9 +89,8 @@ var contexts={
                 person_selected=internationalize(create_person(person));
                 apply_function.call({result:person_selected});
             }
-            this.contexts.dao_ajax.person(id, _caller);
+            contexts.dao_ajax.person(id, _caller);
         },
-       
         list:function(apply_function){
             var _caller= function( persons ) {
                 var ps=[];
@@ -82,6 +98,7 @@ var contexts={
                     ps.push(internationalize(create_person(persons[i])));
                 }
                 ps={persons:ps};
+                alert("listttt");
                 apply_function.call({result:ps});
             };
             this.contexts.dao_ajax.persons(_caller);
@@ -123,36 +140,38 @@ function check_dom_element(the_element){
 
 
 function smoth_paint(e, r, on_end){
-
+    alert(e);
     e
         .html("<br>Loading")
         .fadeOut("slow", function(){
             $(this).html(r+"<br>")
                 .fadeIn("slow", function(){
-                    if(on_end)
+                    if(on_end){
                         on_end.fn.apply(this, on_end.args);
+                    }
                 }
                        );});
 }
 
 /**
-   apply in the_dom_element the result of the_function
+   apply in the_dom_element the result of the_function, with callback
+   on_end_function_displayed 
 **/
-function my_apply(the_function,the_template, the_dom_element, on_end){
-    var register_function=check_function(the_function);
-    if(on_end)
-        on_end=check_function(on_end);
+function my_apply(the_function,the_template, the_dom_element, on_end){  
+ var register_function=check_function(the_function);
+   if(on_end)
+       on_end=check_function(on_end);
 
     var dom_element=check_dom_element(the_dom_element);
 
     var the_apply_function=function(){
+        //, on_end
         smoth_paint(dom_element, templating(the_template, this.result), on_end);
     };
     register_function.args.push(the_apply_function);
 
     register_function.fn.apply(this, register_function.args);
 }
-
 
 
 

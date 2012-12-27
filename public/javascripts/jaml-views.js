@@ -147,21 +147,22 @@ Jaml.register('languages', function(lang){
         a({cls:'AU'==lang?'selected':'',href:'#'}, 'AU'))
    
 });
+
+
+
 Jaml.register('person_link', function(person){
-    li(span(person.get_fname()+" "+person.get_lname()) ,
+        li(span(person.get_fname()+" "+person.get_lname()) ,
        a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_show', '.main-content');"}, 'show'),
        a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_edit', '.main-content');"}, 'edit'),
-       a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_remove', '.main-content', 'ui.form_remove');"}, 'del')
+       a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_remove', '.main-content', 'ui.form_remove')"}, 'del')
 )
 });
 
 Jaml.register('widget', function(p) {
-   
+  //if(p)
     h1('Person List'),
     div(
-        ul({cls:"ul_persons"},
-           Jaml.render('person_link', p.persons)
-
+        ul({cls:"ul_persons"} //Jaml.render('person_link', p.persons)
           ),
            a({cls: names_id.person_insert_anchor, href: '#', onclick:'new_person();' }, 'Add Person')
     ),
@@ -176,6 +177,11 @@ Jaml.register('intro', function(){
             br(),
         a({cls: names_id.person_insert_anchor, href: '#', onclick:'new_person();' }, 'Add Person')
 )
+    );
+});
+Jaml.register('message', function(m){
+    div(
+        h1({cls:'intro'},  m)
     );
 });
 
