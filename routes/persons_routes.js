@@ -39,27 +39,8 @@ function generate_id_person(){
     
 }
 
-
-function req_res_base(req, res){
-    return {
-        print_result: function (r){
-            res.send(r);
-        }
-    }
-}
-
-function function_inheritance(older, newer, args){
-    var superior=older.apply(this, args);
-    for(var name in superior){
-        newer[name]=superior[name];
-    } 
-    
-
-}
-
-
 var  find_by_id=function(req, res){
-    function_inheritance(req_res_base, this, arguments);
+
     var person_id=req.params.id;    
     var mi_parser=my_xml.create_parser(__dirname);    
 
@@ -86,7 +67,7 @@ var delete_by_id=function(req, res){
     fs.unlink(__dirname+"/"+person_id+".xml", on_delete);
 }
 
-    
+
 
 exports.add_new=function(req, res){
     log(req.body);
@@ -109,34 +90,24 @@ exports.delete_by_id=delete_by_id;
 
 exports.find_all=function (req, res) {
 
+    
+   var person_list=[];
 
-    var cole=[];
-    var contador=0;
-    function addResult(result){
-        cole.push(person_details(result));
-        if(cole.length==contador){
-            //TODO ORDER THE RESULTS BY ID
-            res.send(cole);
+   this.counter=0;
+
+    function on_end_parse_file(result){
+        person_list.push(person_details(result));
+        if(person_list.length==counter){
+            res.send(person_list);
         }
     };
+    function on_no_result(){
+          res.send({result:"SIN DATA"});        
+    };
 
-function on_read_file_in_directory_function(){
-  if(this.file.indexOf(".xml")!==-1){        
-    var name=this.file.replace(".xml", "");
-    my_xml.create_parser(__dirname).read_data(name, addResult);
-}
-};
+    my_xml.aply_fn_to_xml_files_in_dir_async(__dirname, on_no_result, on_end_parse_file);
 
-    fs.readdir(__dirname, function(err, files){
-        my_fs.apply_fn_to_files(files, function(){ contador++; });
-        if(contador>0){
-            my_fs.apply_fn_to_files(files, on_read_file_in_directory_function);
-            }else{
-                res.send({});
-            }
 
-    }); 
-    
 
 
 };
