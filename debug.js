@@ -10,7 +10,11 @@ exports.reloadCode=function reloadCode(){
     log("\n\nTesting: Reloading Code at: "+t+"\n");
 }
 
-
 exports.spec=function (messages){
 console.log("/*\n//\tAPI SPECIFICATION: \n//\n//\t*"+messages.join("\n//\t* ").toUpperCase()+"\n*/")
 }
+
+exports.console_inspects=function(o){
+    sys.puts(sys.inspect(o));    
+}
+
