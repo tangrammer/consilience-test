@@ -69,3 +69,8 @@ exports.aply_fn_to_xml_files_in_dir_async=function(__dirname, if_no_results_fn, 
     }); 
 
 };
+exports.create_xml_with_json_data=function(file_path, data, on_end){
+  
+    var xml_data=jstoxml.toXML(data);
+    my_fs.write_file(file_path, xml_data, on_end);
+};

@@ -11,10 +11,21 @@ var api={
                       // return false
                       // to cancel submit       
                   },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert(errorThrown+"- "+textStatus);
+                },
                 success: function(html) { 
                     if(spec.on_end!==undefined){
                     //    alert("calling SUCCESS "+spec.on_end);
+                        if(html.error!==undefined){
+                            if(spec.on_error!==undefined){
+                                spec.on_error.call(this);                            
+                            } else{
+                                alert("oh! an error dont catched  :( ")
+                            }
+                        }else{
                         spec.on_end.call(this);
+                        }
                     }
                 }
             };

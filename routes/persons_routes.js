@@ -16,10 +16,7 @@ var __dirname= "./data";
 
 
 function write_data(data, write_callback){
-    //function write_callback(err) { if (err) throw err;
-    //console.log('It\'s saved!');}
-    var xml_data=jstoxml.toXML(data);
-    fs.writeFile('./data/'+data.person.id+'.xml', xml_data, write_callback);
+    my_xml.create_xml_with_json_data('./data/'+data.person.id+'.xml', data, write_callback);
 }
 
 function generate_id_person(){
@@ -54,8 +51,8 @@ var  find_by_id=function(req, res){
 
 
 var delete_by_id=function(req, res){
-    log("DELETE BY ID"+req.body.id);
-    function_inheritance(req_res_base, this, arguments);
+
+
     
     var person_id=req.params.id;    
     
@@ -70,11 +67,14 @@ var delete_by_id=function(req, res){
 
 
 exports.add_new=function(req, res){
-    log(req.body);
     var new_id=generate_id_person();
     req.body.id=new_id;
-    write_data({person:req.body}, function(err) { if (err) throw err; res.send(req.body);});
-    res.send("OK");
+    write_data({person:req.body}, function(err) {
+        if (err)  res.send({error:true});
+        res.send(req.body);
+
+    });
+
 
 }
 

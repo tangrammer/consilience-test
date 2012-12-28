@@ -198,7 +198,12 @@ function insert_person_on_end(){
                    on_end: function(){
                        render_in_dom({fn:partial(api.general.message, 'PERSON INSERTED') ,view:"message", dom:".main-content"});
                        render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
-                   }}
+                   },
+                  on_error: function(){
+                      render_in_dom({fn:partial(api.general.message, 'AN ERROR HAS HAPPENED! :( ') ,view:"message", dom:".main-content"});
+                      render_in_dom({fn:partial(api.general.message,' '), view:"message", dom:".sidebar"});
+                  }
+                  }
                  );
 
 }
