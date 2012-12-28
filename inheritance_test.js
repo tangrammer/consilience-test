@@ -4,9 +4,6 @@ var app =express();
 
 var core=require('./my_core');
 var i18n=require('./i18n');
-var dob=require('./dob.js');
-
-
 
 core.load_library_to_global("debug");
 
