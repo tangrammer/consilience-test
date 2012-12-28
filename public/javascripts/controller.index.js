@@ -4,12 +4,11 @@ function templating(template, model){
 var api={
     ajax:{
         form:function (spec){
-           
             var options = { 
                 type: spec.type, 
                 url: spec.url,
                   beforeSubmit: function(arr, $form, options) {  
-                                        // return false
+                      // return false
                       // to cancel submit       
                   },
                 success: function(html) { 
@@ -19,16 +18,18 @@ var api={
                     }
                 }
             };
-           // alert("ajax_form"+spec.form+" ::: "+options.success+" --- "+spec.on_end);
             $(spec.form).ajaxForm(options) ;
-            
         },
-        form_remove:function(_on_end){
-            api.ajax.form({form:"#person_edit", type:"delete", url:"/persons/", on_end: _on_end});
+        form_remove:function(id, _on_end){
+            api.ajax.form({form:"#person_edit", type:"delete", url:"/persons/"+id, on_end: _on_end});
         },
         form_add:function(_on_end){
-            api.ajax.form({form:"#person_edit", type:"poaaast", url:"/paaersons/", on_end: _on_end});
+            api.ajax.form({form:"#person_edit", type:"post", url:"/persons/", on_end: _on_end});
+        },
+        form_edit:function(id, _on_end){
+            api.ajax.form({form:"#person_edit", type:"put", url:"/persons/"+id, on_end: _on_end});
         }
+
     },
     dao_ajax:{
         ajax:function(_url,caller){
@@ -42,9 +43,7 @@ var api={
         }
     },
     ui:{
-        form_remove: function(){
-            delete_person();
-        },
+
         binding_languages:function(){
             $(".languages > a").bind({
                 click: function(e) {

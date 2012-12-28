@@ -33,7 +33,7 @@ Jaml.register('person_edit', function(person) {
                   option({value:'AU'}, 'AU')
                  ),
             br(),
-            input({type: 'submit', value: 'Edit', onclick:'edit_person();'})
+            input({type: 'submit', value: 'Edit'})
         )
        );
 
@@ -149,23 +149,26 @@ Jaml.register('languages', function(lang){
 });
 
 function delet_person_link(id){
-function on_end_load_person_to_delete(){
-    api.ajax.form({form:"#person_edit", type:"delete", url:"/persons/"+$('#id').val(), template:'person_removed', 
-                   on_end: function(){
-                       render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
-                       render_in_dom({fn:partial(api.general.message, 'PERSON REMOVED') ,view:"message", dom:".main-content"});
-                   } 
-                  });
-}
-
-    render_in_dom({fn:partial(api.person.load,id), view:"person_remove", dom:".main-content", on_end:on_end_load_person_to_delete}); 
+   var on_end_delete_person= partial(api.ajax.form_remove, id,  
+                    function(){
+                        render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
+                        render_in_dom({fn:partial(api.general.message, 'PERSON REMOVED') ,view:"message", dom:".main-content"});
+                    } 
+                   );
+    render_in_dom({fn:partial(api.person.load,id), view:"person_remove", dom:".main-content", on_end:on_end_delete_person}); 
 };
 
 function show_person_link(id){
     render_in_dom({fn:partial(api.person.load,id) ,view: 'person_show', dom:'.main-content'});
 }
 function edit_person_link(id){
-    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_edit', dom:'.main-content'});
+   var on_end_edit_person= partial(api.ajax.form_edit, id,  
+                    function(){
+                        render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
+                        render_in_dom({fn:partial(api.general.message, 'PERSON EDITED OK!') ,view:"message", dom:".main-content"});
+                    } 
+                   );
+    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_edit', dom:'.main-content', on_end:on_end_edit_person});
 }
 
 

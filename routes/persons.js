@@ -87,6 +87,7 @@ var  find_by_id=function(req, res){
 
 
 var delete_by_id=function(req, res){
+    console.log("DELETE BY ID"+req.body.id);
     function_inheritance(req_res_base, this, arguments);
     
     var person_id=req.params.id;    
@@ -109,6 +110,12 @@ exports.add_new=function(req, res){
     write_data({person:req.body}, function(err) { if (err) throw err; res.send(req.body);});
     res.send("OK");
 
+}
+
+exports.edit_by_id=function(req, res){
+    console.log(req.body);
+    write_data({person:req.body}, function(err) { if (err) throw err; res.send(req.body);});
+    res.send("OK");
 }
 
 exports.find_by_id=find_by_id;

@@ -36,9 +36,10 @@ var persons = require('./routes/persons');
 app.get('/persons', persons.find_all);
 app.get('/persons/:id', persons.find_by_id);
 app.delete('/persons/:id', persons.delete_by_id);
-
+app.put('/persons/:id', persons.edit_by_id);
 //app.delete('/persons', persons.delete_all);
 app.post('/persons', persons.add_new);
+
 //app.get('/persons.json/:id', persons.find_by_id_json);
 app.get('/', 
         function(req, res){
@@ -54,9 +55,3 @@ var port = process.env.PORT || 3000;
 app.listen(port);
 var mensaje="server is  listening in "+port;
 log(mensaje);
-
-
-
-
-
-
