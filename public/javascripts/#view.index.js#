@@ -52,14 +52,6 @@ function edit_person(){
     action_person({action:'edit', type:'post',url:'/persons', template:'person_edited', form:'#person_edit'});
 }
 
-function delete_person(){
-    api.ajax.form({form:"#person_edit", type:"delete", url:"/persons/"+$('#id').val(), template:'person_removed', 
-                   on_end: function(){
-                       render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
-                       render_in_dom({fn:partial(api.general.message, 'PERSON REMOVED') ,view:"message", dom:".main-content"});
-                   } 
-                  });
-}
 
 /*
 function new_person(){

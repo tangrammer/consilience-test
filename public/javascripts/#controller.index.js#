@@ -42,9 +42,7 @@ var api={
         }
     },
     ui:{
-        form_remove: function(){
-            delete_person();
-        },
+
         binding_languages:function(){
             $(".languages > a").bind({
                 click: function(e) {

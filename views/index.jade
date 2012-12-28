@@ -7,11 +7,16 @@ block more_js
  script(src="/javascripts/jaml-views.js")
  script(src="/javascripts/controller.index.js")
 block content
+      script 
+        function start_button(){
+          render_in_dom({fn:api.welcome.intro, view:"intro", dom:".main-content"}); 
+          render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
+        };
       .welcome
        p
         | The point of this assessment is demonstrate skills with JS, JSON, XML and basic RESTful interaction. 
         p    
-        a(href='#', onclick='my_apply("welcome.intro", "intro", ".main-content");my_apply("person.list", "widget", ".sidebar");' ) start cms persons 
+        a(href='#', onclick='start_button();' ) start cms persons 
         
 block sidebar
   .widget(style='display:none;')

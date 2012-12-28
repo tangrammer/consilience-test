@@ -107,7 +107,7 @@ exports.add_new=function(req, res){
     var new_id=generate_id_person();
     req.body.id=new_id;
     write_data({person:req.body}, function(err) { if (err) throw err; res.send(req.body);});
-
+    res.send("OK");
 
 }
 

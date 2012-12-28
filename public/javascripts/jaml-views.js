@@ -63,7 +63,7 @@ Jaml.register('person_new', function(person) {
                   option({value:'AU'}, 'AU')
                  ),
             br(),
-            input({type: 'submit', value: 'Edit', onclick:'insert_person();'})
+            input({type: 'submit', value: 'Insert'})
         )
        );
 
@@ -148,34 +148,67 @@ Jaml.register('languages', function(lang){
    
 });
 
+function delet_person_link(id){
+function on_end_load_person_to_delete(){
+    api.ajax.form({form:"#person_edit", type:"delete", url:"/persons/"+$('#id').val(), template:'person_removed', 
+                   on_end: function(){
+                       render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
+                       render_in_dom({fn:partial(api.general.message, 'PERSON REMOVED') ,view:"message", dom:".main-content"});
+                   } 
+                  });
+}
+
+    render_in_dom({fn:partial(api.person.load,id), view:"person_remove", dom:".main-content", on_end:on_end_load_person_to_delete}); 
+};
+
+function show_person_link(id){
+    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_show', dom:'.main-content'});
+}
+function edit_person_link(id){
+    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_edit', dom:'.main-content'});
+}
 
 
 Jaml.register('person_link', function(person){
         li(span(person.get_fname()+" "+person.get_lname()) ,
-       a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_show', '.main-content');"}, 'show'),
-       a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_edit', '.main-content');"}, 'edit'),
-       a({cls: names_id.person_detail_anchor, href: '#', onclick:"my_apply('person.load("+person.get_id()+")', 'person_remove', '.main-content', 'ui.form_remove')"}, 'del')
+       a({cls: names_id.person_detail_anchor, href: '#', onclick:"show_person_link("+person.get_id()+");"}, 'show'),
+       a({cls: names_id.person_detail_anchor, href: '#', onclick:"edit_person_link("+person.get_id()+");"}, 'edit'),
+       a({cls: names_id.person_detail_anchor, href: '#', onclick:"delet_person_link("+person.get_id()+");"}, 'del')
 )
 });
 
 Jaml.register('widget', function(p) {
   //if(p)
-    h1('Person List'),
+    div({cls:'person'}, h1('Person List')),
     div(
         ul({cls:"ul_persons"}, Jaml.render('person_link', p.persons)
           ),
-           a({cls: names_id.person_insert_anchor, href: '#', onclick:'new_person();' }, 'Add Person')
+a({cls: names_id.person_insert_anchor, href: '#', 
+onclick:"render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:insert_person_on_end})"}, 'Add Person')
+
     ),
  div(Jaml.render('languages', PersonLocalized.prototype.lang));
 });
 
+function insert_person_on_end(){
+    api.ajax.form({form:"#person_edit", type:"post", url:"/persons/", 
+                   on_end: function(){
+                       render_in_dom({fn:partial(api.general.message, 'PERSON INSERTED') ,view:"message", dom:".main-content"});
+                       render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
+                   }}
+                 );
+
+}
+
 Jaml.register('intro', function(){
+
     div(
         h1({cls:'intro'},  'Person Mangement Zone. (Locale: '+PersonLocalized.prototype.lang+')'),
         p(
             span("Welcome, from this page you can edit the info related to persons. Use the right sidebar to select an existent row or add a new one"),
             br(),
-        a({cls: names_id.person_insert_anchor, href: '#', onclick:'new_person();' }, 'Add Person')
+        a({cls: names_id.person_insert_anchor, href: '#', 
+onclick:"render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:insert_person_on_end})"}, 'Add Person')
 )
     );
 });
