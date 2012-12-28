@@ -127,7 +127,7 @@ function on_read_file_in_directory_function(){
 }
 };
 
-    fs.readdir(__dirname, function(err, files){
+    fs.read_dir(__dirname, function(err, files){
         my_fs.apply_fn_to_files(files, function(){ contador++; });
         if(contador>0){
             my_fs.apply_fn_to_files(files, on_read_file_in_directory_function);
