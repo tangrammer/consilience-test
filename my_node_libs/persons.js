@@ -1,9 +1,9 @@
 var core=require('./core_node.js');
-var path_persons_lib='./../public/javascripts/persons.js';
+var path_persons_lib='./../public/javascripts/domain_libs/persons.js';
 
-var path_core_lib='./../public/javascripts/core.js';
+var path_core_lib='./../public/javascripts/my_libs/core.js';
 
-var path_i18n_lib='./../public/javascripts/i18n.js';
+var path_i18n_lib='./../public/javascripts/my_libs/i18n.js';
 
 
 
