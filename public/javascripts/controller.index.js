@@ -54,37 +54,8 @@ var api={
             this.ajax('/persons/'+id, caller);  
         }
     },
-    ui:{
-
-        binding_languages:function(){
-            $(".languages > a").bind({
-                click: function(e) {
-                    $(this).parent().children().removeClass('selected');
-                    localize($(this).html());
-                    $(this).addClass('selected');     
-                    e.preventDefault();
-                }
-            });
-        }
-    },
-    general:{
-        hw:function(apply_function){
-            return apply_function.call({result:"Hello World"});  
-
-        },
-        message:function(message, apply_function){
-            return apply_function.call({result:message});  
-        },
-    },
-    welcome:{
-        intro: function(render_function){
-            return render_function.call({});
-        }
-    },
     person:{
         load:function(id, apply_function){
-//            TODO   last_action_selected=action;
-           
             var _caller=function(person){
                 person_selected=internationalize(create_person(person));
                 apply_function.call({result:person_selected});
@@ -104,7 +75,29 @@ var api={
                 ps={persons:ps};
                 render_function.call({result:ps});
             };
-            this.api.dao_ajax.persons(_caller);
+            api.dao_ajax.persons(_caller);
+        }
+    },
+    ui:{
+        binding_languages:function(){
+            $(".languages > a").bind({
+                click: function(e) {
+                    $(this).parent().children().removeClass('selected');
+                    localize($(this).html());
+                    $(this).addClass('selected');     
+                    e.preventDefault();
+                }
+            });
+        }
+    },
+    general:{
+        message:function(message, apply_function){
+            return apply_function.call({result:message});  
+        },
+    },
+    welcome:{
+        intro: function(render_function){
+            return render_function.call({});
         }
     }
     

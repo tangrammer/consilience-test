@@ -91,17 +91,12 @@ Jaml.register('person_remove', function(person) {
              input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
              input({type: 'submit', value: 'REMOVE'})
             )
-        
-
-        
        );
-
 });
 Jaml.register('person_removed', function() {
     div(
         h1({cls:'result_action'},'Person removed Correctly!')
     )
-    
 });
 
 
@@ -123,7 +118,11 @@ Jaml.register('person_show', function(person) {
         Jaml.render('person_show_base', person));
 });
 
-function delet_person_link(id){
+my_jaml.action.show_person_link=function(id){
+    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_show', dom:'.main-content'});
+};
+
+my_jaml.action.del_person_link=function (id){
     var on_end_delete_person= partial(api.ajax.form_remove, id,  
                                       function(){
                                           render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});
@@ -133,10 +132,7 @@ function delet_person_link(id){
     render_in_dom({fn:partial(api.person.load,id), view:"person_remove", dom:".main-content", on_end:on_end_delete_person}); 
 };
 
-function show_person_link(id){
-    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_show', dom:'.main-content'});
-}
-function edit_person_link(id){
+my_jaml.action.edit_person_link =function(id){
     var on_end_edit_person= partial(api.ajax.form_edit, id,  
                                     function(){
                                         render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});
@@ -148,12 +144,16 @@ function edit_person_link(id){
 
 
 Jaml.register('person_link', function(person){
-    li(span(person.get_fname()+" "+person.get_lname()) ,
-       a({ href: '#', onclick:"show_person_link("+person.get_id()+");"}, 'show'),
-       a({ href: '#', onclick:"edit_person_link("+person.get_id()+");"}, 'edit'),
-       a({ href: '#', onclick:"delet_person_link("+person.get_id()+");"}, 'del')
+    li(span(person.get_id()+" - "+person.get_fname()+" "+person.get_lname()) ,
+       a({ href: '#', onclick:"my_jaml.action.show_person_link("+person.get_id()+");"}, 'show'),
+       a({ href: '#', onclick:"my_jaml.action.edit_person_link("+person.get_id()+");"}, 'edit'),
+       a({ href: '#', onclick:"my_jaml.action.del_person_link("+person.get_id()+");"}, 'del')
       )
 });
+
+my_jaml.action.add_person_link=function(){
+render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:insert_person_on_end});
+};
 
 Jaml.register('person_list', function(p) {
     //if(p)
@@ -162,7 +162,7 @@ Jaml.register('person_list', function(p) {
         ul({cls:"ul_persons"}, Jaml.render('person_link', p.persons)
           ),
         a({ href: '#', 
-           onclick:"render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:insert_person_on_end})"}, 'Add Person')
+           onclick:"my_jaml.action.add_person_link()"}, 'Add Person')
 
     ),
     div(Jaml.render('languages', PersonLocalized.prototype.lang));

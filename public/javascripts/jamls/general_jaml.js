@@ -24,7 +24,14 @@ Jaml.register('languages', function(lang){
     
 });
 
-
+var my_jaml={
+    action:{
+        start:function(){
+          render_in_dom({fn:api.welcome.intro, view:"intro", dom:".main-content"}); 
+          render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});
+        }
+    }
+};
 
 Jaml.register('intro', function(){
 
