@@ -2,12 +2,12 @@ var assert=require('assert');
 var express=require('express');
 var app =express();
 
-var core=require('./my_core');
-var i18n=require('./i18n');
+var core=require('./../my_node_libs/my_core');
+var i18n=require('./../my_node_libs/i18n');
 
 core.load_library_to_global("debug");
 
-var $persons=require('./persons.js');
+var $persons=require('./../my_node_libs/persons.js');
 
 app.listen(3000);
 reloadCode();
