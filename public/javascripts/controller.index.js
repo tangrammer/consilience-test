@@ -8,6 +8,7 @@ var api={
                 type: spec.type, 
                 url: spec.url,
                   beforeSubmit: function(arr, $form, options) {  
+                      $(spec.form).fadeOut("slow") ;
                       // return false
                       // to cancel submit       
                   },
@@ -108,48 +109,6 @@ var api={
     }
     
 };
-
-function partial( fn /*, args...*/) {
-  var aps = Array.prototype.slice,
-    args = aps.call( arguments, 1 );
-  
-  return function() {
-    return fn.apply( this, args.concat( aps.call( arguments ) ) );
-  };
-}
-function f_on_success(){
-    alert("ey");
-
-          render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});  
-//    render_in_dom(api.person.list, "widget", ".sidebar");
-//   render_in_dom(api.general.message('PERSON INSERTED OK!'), "message", ".main-content");
-};
-var pp=partial(api.ajax.form_add, f_on_success);
-
-
-
-
-function check_function(the_function){
-    var the_args=[];
-    if(the_function.indexOf("(")>0){
-       the_args=the_function.substring((the_function.indexOf("(")+1), the_function.indexOf(")")).split(",");
-        the_function=the_function.substring(0, (the_function.indexOf("(")));
-    }
-    var url_function=the_function.split(".");
-
-    var function_mapper=api;
-    for(var i=0; i<url_function.length; i++){
-        var check_key=url_function[i];
-        var step=function_mapper[check_key];
-        if(step===undefined){
-            alert("ERROR FATAL: trying to call a undefined function: "+check_key+" in "+ url_function);
-            return;
-        }else{
-            function_mapper=step;
-        }
-    }
-    return {fn:function_mapper, args:the_args};  
-}
 
 function check_dom_element(the_element){
     var o=$(the_element);
