@@ -4,13 +4,14 @@ block more_js
  script(src="/javascripts/my_libs/core.js")
  script(src="/javascripts/my_libs/i18n.js")
  script(src="/javascripts/domain_libs/persons.js")
- script(src="/javascripts/jaml-views.js")
+ script(src="/javascripts/jamls/general_jaml.js")
+ script(src="/javascripts/jamls/person_jaml.js")
  script(src="/javascripts/controller.index.js")
 block content
       script 
         function start_button(){
           render_in_dom({fn:api.welcome.intro, view:"intro", dom:".main-content"}); 
-          render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});
+          render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});
         };
       .welcome
        p
@@ -19,7 +20,7 @@ block content
         a(href='#', onclick='start_button();' ) start cms persons 
         
 block sidebar
-  .widget(style='display:none;')
+  .person_list(style='display:none;')
      
       a(href='#', onclick='basic_person();') person 
       br

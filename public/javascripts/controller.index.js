@@ -120,7 +120,7 @@ function partial( fn /*, args...*/) {
 function f_on_success(){
     alert("ey");
 
-          render_in_dom({fn:api.person.list, view:"widget", dom:".sidebar"});  
+          render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});  
 //    render_in_dom(api.person.list, "widget", ".sidebar");
 //   render_in_dom(api.general.message('PERSON INSERTED OK!'), "message", ".main-content");
 };
