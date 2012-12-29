@@ -1,11 +1,10 @@
 var fs = require('fs'),  xml2js = require('xml2js'), sys=require('sys'), jstoxml=require('jstoxml');
-var core=require('./../my_core');
+var core=require('./../my_node_libs/my_core');
 // loading my debug functions for logging or inspect values
 core.load_library_to_global("debug");
 
-var my_xml=require('./../my_xml_lib');
-var my_fs=require('./../my_fs_lib');
-
+var my_xml=require('./../my_node_libs/my_xml_lib');
+var my_fs=require('./../my_node_libs/my_fs_lib');
 
 
 function person_details (result){

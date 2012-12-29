@@ -1,7 +1,7 @@
 var express=require('express'), stylus = require('stylus'), nib = require('nib'), app =express();
 
 // my core library, has utilities to load to globally other js libs
-var core=require('./my_core');
+var core=require('./my_node_libs/my_core');
 // loading my debug functions for logging or inspect values
 core.load_library_to_global("debug");
 
