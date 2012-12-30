@@ -1,50 +1,3 @@
-
-function reload_person_list_sidebar(){
-    render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar", on_end:function(){ api.ui.binding_languages.call(this); api.ui.binding_crud_person_action.call(this);}});
-};
-
-function display_message_main_content(message){
-  render_in_dom({fn:partial(api.general.message, message) ,view:"message", dom:".main-content"});
-}
-function reload_persons_fn(message){
-    return function(){
-        reload_person_list_sidebar();
-        display_message_main_content(message);
-    };
-}
-
-my_jaml.action.show_person_link=function(_id){
-    render_in_dom({fn:partial(api.person.load, _id) ,view: 'person_show', dom:'.main-content'});
-};
-
-
-my_jaml.action.del_person_link=function (_id){
-
-    var ajax_behavior= partial(api.ajax.form.behavior.remove,  
-                                                reload_persons_fn('PERSON REMOVED'),  
-                                                reload_persons_fn('AN ERROR HAS HAPPENED! :( '))
-        .bind({form_id:"#person_edit", id:_id});
-    render_in_dom({fn:partial(api.person.load,_id), view:"person_remove", dom:".main-content", on_end:ajax_behavior}); 
-};
-
-
-my_jaml.action.edit_person_link =function(_id){
-    var ajax_behavior= partial(api.ajax.form.behavior.edit,
-                                              reload_persons_fn('PERSON EDITED OK'),  
-                                              reload_persons_fn('AN ERROR HAS HAPPENED! :( '))
-        .bind({form_id:"#person_edit", id:_id});
-    render_in_dom({fn:partial(api.person.load,_id) ,view: 'person_edit', dom:'.main-content', on_end:ajax_behavior});
-}
-
-my_jaml.action.add_person_link=function(){
-    var ajax_behavior=partial(api.ajax.form.behavior.add, 
-                                            reload_persons_fn('PERSON INSERTED OK'),  
-                                            reload_persons_fn('AN ERROR HAS HAPPENED! :( '))
-        .bind({form_id:"#person_edit"});
-    render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:ajax_behavior});
-};
-
-
 Jaml.register('person_edit', function(person) {
     div({cls: 'person'},
         h1("Edit Person: "+person.get_fname()+" "+person.get_lname()),
@@ -179,8 +132,7 @@ Jaml.register('person_list', function(p) {
     div(
         ul({cls:"ul_persons"}, Jaml.render('person_link', p.persons)
           ),
-        a({ href: '#', 
-            onclick:"my_jaml.action.add_person_link()"}, 'Add Person')
+        a({ href: '#', cls:'add_person'}, 'Add Person')
     ),
     div(Jaml.render('languages', PersonLocalized.prototype.lang));
 });

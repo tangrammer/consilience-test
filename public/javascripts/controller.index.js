@@ -99,15 +99,25 @@ var api={
     ui:{
         binding_crud_person_action:function(){
             $("a.show_person").bind({
-                click:function(){my_jaml.action.show_person_link($(this).attr("person_id"));}
+                click:function(){view.action.show_person_link($(this).attr("person_id"));}
                 }
             );
             $("a.edit_person").bind({
-                click:function(){my_jaml.action.edit_person_link($(this).attr("person_id"));}
+                click:function(){view.action.edit_person_link($(this).attr("person_id"));}
                 }
             );
             $("a.del_person").bind({
-                click:function(){my_jaml.action.del_person_link($(this).attr("person_id"));}
+                click:function(){view.action.del_person_link($(this).attr("person_id"));}
+                }
+            );
+            $("a.add_person").bind({
+                click:function(){view.action.add_person_link();}
+                }
+            );
+        },
+        binding_start_person_cms:function(){
+            $("a.start_cms_person").bind({
+                click:function(){view.action.start();}
                 }
             );
         },
@@ -142,6 +152,64 @@ var api={
     }
     
 };
+var utility_view={
+    reload_person_list_sidebar:function(){
+        render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar", on_end:function(){ api.ui.binding_languages.call(this); api.ui.binding_crud_person_action.call(this);}});
+    },
+    display_message_main_content:function(message){
+        render_in_dom({fn:partial(api.general.message, message) ,view:"message", dom:".main-content"});
+    },
+    reload_persons_fn: function(message){
+        return function(){
+            utility_view.reload_person_list_sidebar();
+            utility_view.display_message_main_content(message);
+        }
+    }
+}
+
+
+
+var view={
+    action:{
+        welcome_app:function(){
+          render_in_dom({fn:api.render.view, view:"welcome_app", dom:".main-content", on_end: api.ui.binding_start_person_cms}); 
+        },
+        start:function(){
+          render_in_dom({fn:api.render.view, view:"intro", dom:".main-content"}); 
+            utility_view.reload_person_list_sidebar();
+        },
+        show_person_link:function(_id){
+            render_in_dom({fn:partial(api.person.load, _id) ,view: 'person_show', dom:'.main-content'});
+        },
+        del_person_link:function (_id){
+            var ajax_behavior= partial(api.ajax.form.behavior.remove,  
+                                       utility_view.reload_persons_fn('PERSON REMOVED'),  
+                                       utility_view.reload_persons_fn('AN ERROR HAS HAPPENED! :( '))
+                .bind({form_id:"#person_edit", id:_id});
+            render_in_dom({fn:partial(api.person.load,_id), view:"person_remove", dom:".main-content", on_end:ajax_behavior}); 
+        },
+        edit_person_link: function(_id){
+            var ajax_behavior= partial(api.ajax.form.behavior.edit,
+                                       utility_view.reload_persons_fn('PERSON EDITED OK'),  
+                                       utility_view.reload_persons_fn('AN ERROR HAS HAPPENED! :( '))
+                .bind({form_id:"#person_edit", id:_id});
+            render_in_dom({fn:partial(api.person.load,_id) ,view: 'person_edit', dom:'.main-content', on_end:ajax_behavior});
+        },
+        add_person_link: function(){
+            var ajax_behavior=partial(api.ajax.form.behavior.add, 
+                                      utility_view.reload_persons_fn('PERSON INSERTED OK'),  
+                                      utility_view.reload_persons_fn('AN ERROR HAS HAPPENED! :( '))
+                .bind({form_id:"#person_edit"});
+            render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:ajax_behavior});
+        }
+
+    }
+};
+
+
+
+
+
 
 function localize_form(){
     $('#location').val(PersonLocalized.prototype.lang);
@@ -185,9 +253,9 @@ function check_dom_element(the_element){
 var cache={};
 function add_cache_value(the_dom_element, _fn){
     if(cache[the_dom_element]===undefined){
-        console.log("setting prop");
+//        console.log("setting prop");
     }else{
-        console.log("prop exists");
+   //     console.log("prop exists");
 }
  cache[the_dom_element]=_fn;
 }
@@ -199,7 +267,7 @@ function render_in_dom(spec){
 
 
     var dom_element=check_dom_element(the_dom_element);
-    console.log(the_dom_element+"\n---"+cache[the_dom_element]);
+//    console.log(the_dom_element+"\n---"+cache[the_dom_element]);
 
 
     var the_render_function=function(){
@@ -231,7 +299,7 @@ function smoth_paint(e, r, on_end){
                        );});
 }
 
- $(document).ready(my_jaml.action.welcome_app);
+ $(document).ready(view.action.welcome_app);
 
 
 

@@ -10,23 +10,6 @@ var names_id={
 
 };
 
-var my_jaml={
-    action:{
-        welcome_app:function(){
-          render_in_dom({fn:api.render.view, view:"welcome_app", dom:".main-content"}); 
-        },
-        start:function(){
-          render_in_dom({fn:api.render.view, view:"intro", dom:".main-content"}); 
-            reload_person_list_sidebar();
-
-            
-        },
-        
-    }
-};
-
-
-
 
 
 Jaml.register('languages', function(lang){
@@ -45,9 +28,7 @@ Jaml.register('intro', function(){
         h1({cls:'intro'},  'Person Mangement Zone. (Locale: '+PersonLocalized.prototype.lang+')'),
         p(
             span("Welcome, from this page you can edit the info related to persons. Use the right sidebar to select an existent row or add a new one"),
-            br(),
-            a({cls: names_id.person_insert_anchor, href: '#', 
-               onclick:"my_jaml.action.add_person_link()"}, 'Add Person')
+            br()
         )
     );
 });
@@ -59,7 +40,7 @@ Jaml.register('message', function(m){
 Jaml.register('welcome_app', function (){
     div({clj:".welcome"},
        p("The point of this assessment is demonstrate skills with JS, JSON, XML and basic RESTful interaction. " ,
-        br(),a({href:'#', onclick:"my_jaml.action.start();"}, "start cms persons")))}
+        br(),a({href:'#', cls:'start_cms_person'}, "start cms persons")))}
 ); 
 
 
