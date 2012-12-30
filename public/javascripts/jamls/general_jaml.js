@@ -10,6 +10,15 @@ var names_id={
 
 };
 
+var my_jaml={
+    action:{
+        start:function(){
+          render_in_dom({fn:api.welcome.intro, view:"intro", dom:".main-content"}); 
+          render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar", on_end:api.i18n.ui.binding_languages});
+            
+        }
+    }
+};
 
 
 
@@ -24,14 +33,6 @@ Jaml.register('languages', function(lang){
     
 });
 
-var my_jaml={
-    action:{
-        start:function(){
-          render_in_dom({fn:api.welcome.intro, view:"intro", dom:".main-content"}); 
-          render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});
-        }
-    }
-};
 
 Jaml.register('intro', function(){
 
@@ -41,7 +42,7 @@ Jaml.register('intro', function(){
             span("Welcome, from this page you can edit the info related to persons. Use the right sidebar to select an existent row or add a new one"),
             br(),
             a({cls: names_id.person_insert_anchor, href: '#', 
-               onclick:"render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:insert_person_on_end})"}, 'Add Person')
+               onclick:"my_jaml.action.add_person_link()"}, 'Add Person')
         )
     );
 });

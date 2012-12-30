@@ -1,29 +1,64 @@
+function reload_person_list_sidebar(){
+    render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar", on_end:api.i18n.ui.binding_languages});
+};
+
+function display_message_main_content(message){
+  render_in_dom({fn:partial(api.general.message, message) ,view:"message", dom:".main-content"});
+}
+function reload_persons_fn(message){
+    return function(){
+        reload_person_list_sidebar();
+        display_message_main_content(message);
+    };
+}
+
+my_jaml.action.show_person_link=function(id){
+    render_in_dom({fn:partial(api.person.load, id) ,view: 'person_show', dom:'.main-content'});
+};
+
+my_jaml.action.del_person_link=function (id){
+    var form_behavior_delete_person_fn= partial(api.form.remove, id,  reload_persons_fn('PERSON REMOVED'),  reload_persons_fn('AN ERROR HAS HAPPENED! :( '));
+    render_in_dom({fn:partial(api.person.load,id), view:"person_remove", dom:".main-content", on_end:form_behavior_delete_person_fn}); 
+};
+
+
+my_jaml.action.edit_person_link =function(id){
+    var form_behavior_edit_person_fn= partial(api.form.edit, id,  reload_persons_fn('PERSON EDITED OK'),  reload_persons_fn('AN ERROR HAS HAPPENED! :( '));
+    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_edit', dom:'.main-content', on_end:form_behavior_edit_person_fn});
+}
+ 
+my_jaml.action.add_person_link=function(){
+    var form_behavior_add_person_fn=partial(api.form.add, reload_persons_fn('PERSON INSERTED OK'),  reload_persons_fn('AN ERROR HAS HAPPENED! :( '));
+    render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:form_behavior_add_person_fn});
+};
+
+
 Jaml.register('person_edit', function(person) {
     div({cls: 'person'},
         h1("Edit Person: "+person.get_fname()+" "+person.get_lname()),
         form({id:"person_edit"},
-            input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
-            label({for: 'fname'}, "First Name: "),
-            input({type: 'text', name: 'fname', id: 'fname', value: person.get_fname()}),
-            br(),
-            label({for: 'lname'}, "Last Name: "),
-            input({type: 'text', name: 'lname', id: 'lname', value: person.get_lname()}),
-            br(),
-            label({for: 'DOB'}, "Date Of Birth: "),
-            input({type: 'text', name: 'DOB', id: 'DOB', value: person.get_DOB()}),
-            br(),
-            label({for: 'wage'}, "Wage: "),
-            input({type: 'text', name: 'wage', id: 'wage', value: person.get_wage()}),
-            br(),
-            label({for: 'location'}, "Location: "),
-            select({name: 'location', id: 'location'},
-                  option({value:'US'}, 'US'),
-                  option({value:'UK'}, 'UK'),
-                  option({value:'AU'}, 'AU')
-                 ),
-            br(),
-            input({type: 'submit', value: 'Edit'})
-        )
+             input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
+             label({for: 'fname'}, "First Name: "),
+             input({type: 'text', name: 'fname', id: 'fname', value: person.get_fname()}),
+             br(),
+             label({for: 'lname'}, "Last Name: "),
+             input({type: 'text', name: 'lname', id: 'lname', value: person.get_lname()}),
+             br(),
+             label({for: 'DOB'}, "Date Of Birth: "),
+             input({type: 'text', name: 'DOB', id: 'DOB', value: person.get_DOB()}),
+             br(),
+             label({for: 'wage'}, "Wage: "),
+             input({type: 'text', name: 'wage', id: 'wage', value: person.get_wage()}),
+             br(),
+             label({for: 'location'}, "Location: "),
+             select({name: 'location', id: 'location'},
+                    option({value:'US'}, 'US'),
+                    option({value:'UK'}, 'UK'),
+                    option({value:'AU'}, 'AU')
+                   ),
+             br(),
+             input({type: 'submit', value: 'Edit'})
+            )
        );
 
 });
@@ -31,29 +66,29 @@ Jaml.register('person_edit', function(person) {
 Jaml.register('person_new', function(person) {
     div({cls: 'person'},
         h1("Inserting New Person "),
-   form({id:"person_edit"},
-            input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
-            label({for: 'fname'}, "First Name: "),
-            input({type: 'text', name: 'fname', id: 'fname', value: person.get_fname()}),
-            br(),
-            label({for: 'lname'}, "Last Name: "),
-            input({type: 'text', name: 'lname', id: 'lname', value: person.get_lname()}),
-            br(),
-            label({for: 'DOB'}, "Date Of Birth: "),
-            input({type: 'text', name: 'DOB', id: 'DOB', value: person.get_DOB()}),
-            br(),
-            label({for: 'wage'}, "Wage: "+person.get_wage_symbol()),
-            input({type: 'text', name: 'wage', id: 'wage', value: person.get_wage()}),
-            br(),
-            label({for: 'location'}, "Location: "),
-            select({name: 'location', id: 'location'},
-                  option({value:'US'}, 'US'),
-                  option({value:'UK'}, 'UK'),
-                  option({value:'AU'}, 'AU')
-                 ),
-            br(),
-            input({type: 'submit', value: 'Insert'})
-        )
+        form({id:"person_edit"},
+             input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
+             label({for: 'fname'}, "First Name: "),
+             input({type: 'text', name: 'fname', id: 'fname', value: person.get_fname()}),
+             br(),
+             label({for: 'lname'}, "Last Name: "),
+             input({type: 'text', name: 'lname', id: 'lname', value: person.get_lname()}),
+             br(),
+             label({for: 'DOB'}, "Date Of Birth: "),
+             input({type: 'text', name: 'DOB', id: 'DOB', value: person.get_DOB()}),
+             br(),
+             label({for: 'wage'}, "Wage: "+person.get_wage_symbol()),
+             input({type: 'text', name: 'wage', id: 'wage', value: person.get_wage()}),
+             br(),
+             label({for: 'location'}, "Location: "),
+             select({name: 'location', id: 'location'},
+                    option({value:'US'}, 'US'),
+                    option({value:'UK'}, 'UK'),
+                    option({value:'AU'}, 'AU')
+                   ),
+             br(),
+             input({type: 'submit', value: 'Insert'})
+            )
        );
 
 });
@@ -118,31 +153,6 @@ Jaml.register('person_show', function(person) {
         Jaml.render('person_show_base', person));
 });
 
-my_jaml.action.show_person_link=function(id){
-    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_show', dom:'.main-content'});
-};
-
-my_jaml.action.del_person_link=function (id){
-    var on_end_delete_person= partial(api.ajax.form_remove, id,  
-                                      function(){
-                                          render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});
-                                          render_in_dom({fn:partial(api.general.message, 'PERSON REMOVED') ,view:"message", dom:".main-content"});
-                                      } 
-                                     );
-    render_in_dom({fn:partial(api.person.load,id), view:"person_remove", dom:".main-content", on_end:on_end_delete_person}); 
-};
-
-my_jaml.action.edit_person_link =function(id){
-    var on_end_edit_person= partial(api.ajax.form_edit, id,  
-                                    function(){
-                                        render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});
-                                        render_in_dom({fn:partial(api.general.message, 'PERSON EDITED OK!') ,view:"message", dom:".main-content"});
-                                    } 
-                                   );
-    render_in_dom({fn:partial(api.person.load,id) ,view: 'person_edit', dom:'.main-content', on_end:on_end_edit_person});
-}
-
-
 Jaml.register('person_link', function(person){
     li(span(person.get_id()+" - "+person.get_fname()+" "+person.get_lname()) ,
        a({ href: '#', onclick:"my_jaml.action.show_person_link("+person.get_id()+");"}, 'show'),
@@ -151,35 +161,17 @@ Jaml.register('person_link', function(person){
       )
 });
 
-my_jaml.action.add_person_link=function(){
-render_in_dom({fn:api.person.new_person,view:'person_new', dom:'.main-content', on_end:insert_person_on_end});
-};
-
 Jaml.register('person_list', function(p) {
-    //if(p)
-    div({cls:'person'}, h1('Person List')),
+    div({cls:'person'}, h1('Person List: ')),
     div(
         ul({cls:"ul_persons"}, Jaml.render('person_link', p.persons)
           ),
         a({ href: '#', 
-           onclick:"my_jaml.action.add_person_link()"}, 'Add Person')
-
+            onclick:"my_jaml.action.add_person_link()"}, 'Add Person')
     ),
     div(Jaml.render('languages', PersonLocalized.prototype.lang));
 });
 
-function insert_person_on_end(){
-    api.ajax.form({form:"#person_edit", type:"post", url:"/persons/", 
-                   on_end: function(){
-                       render_in_dom({fn:partial(api.general.message, 'PERSON INSERTED') ,view:"message", dom:".main-content"});
-                       render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar"});
-                   },
-                   on_error: function(){
-                       render_in_dom({fn:partial(api.general.message, 'AN ERROR HAS HAPPENED! :( ') ,view:"message", dom:".main-content"});
-                       render_in_dom({fn:partial(api.general.message,' '), view:"message", dom:".sidebar"});
-                   }
-                  }
-                 );
 
-}
+
 
