@@ -17,7 +17,8 @@ var my_jaml={
         },
         start:function(){
           render_in_dom({fn:api.render.view, view:"intro", dom:".main-content"}); 
-          render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar", on_end:api.i18n.ui.binding_languages});
+            reload_person_list_sidebar();
+
             
         },
         

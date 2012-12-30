@@ -53,7 +53,7 @@ var api={
                 add:function(_on_end, _on_error){
                     api.ajax.form.behavior.base(this.form_id, "post", "/persons/", _on_end, _on_error);
                 },
-                edit:function(id, _on_end, _on_error){
+                edit:function( _on_end, _on_error){
                     api.ajax.form.behavior.base(this.form_id, "put", "/persons/"+this.id, _on_end, _on_error);
                 }
             } 
@@ -96,26 +96,41 @@ var api={
             return apply_function.call({result:message});  
         }
     },
-    i18n:{
-        ui:{
-            binding_languages:function(){
-                $(".languages > a").bind({
-                    click: function(e) {
-                        $(this).parent().children().removeClass('selected');
-                        api.i18n.localize($(this).html());
-                     //   if(cache[".sidebar"]!==undefined)
-                       //     cache[".sidebar"]();
-                        if(cache[".main-content"]!==undefined)
-                            cache[".main-content"]();
-
-//                       display_message_main_content(typeof 
-                  //      reload_person_list_sidebar();
-                        $(this).addClass('selected');     
-                        e.preventDefault();
-                    }
-                });
-            }
+    ui:{
+        binding_crud_person_action:function(){
+            $("a.show_person").bind({
+                click:function(){my_jaml.action.show_person_link($(this).attr("person_id"));}
+                }
+            );
+            $("a.edit_person").bind({
+                click:function(){my_jaml.action.edit_person_link($(this).attr("person_id"));}
+                }
+            );
+            $("a.del_person").bind({
+                click:function(){my_jaml.action.del_person_link($(this).attr("person_id"));}
+                }
+            );
         },
+        binding_languages:function(){
+            $(".languages > a").bind({
+                click: function(e) {
+                    $(this).parent().children().removeClass('selected');
+                    api.i18n.localize($(this).html());
+                    //   if(cache[".sidebar"]!==undefined)
+                    //     cache[".sidebar"]();
+                    if(cache[".main-content"]!==undefined)
+                        cache[".main-content"]();
+
+                    //                       display_message_main_content(typeof 
+                    //      reload_person_list_sidebar();
+                    $(this).addClass('selected');     
+                    e.preventDefault();
+                }
+            });
+        }
+    },
+    
+    i18n:{
         localize:function(_lang){set_locale(_lang);}
     },
     render:{

@@ -1,6 +1,6 @@
 
 function reload_person_list_sidebar(){
-    render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar", on_end:api.i18n.ui.binding_languages});
+    render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar", on_end:function(){ api.ui.binding_languages.call(this); api.ui.binding_crud_person_action.call(this);}});
 };
 
 function display_message_main_content(message){
@@ -13,8 +13,8 @@ function reload_persons_fn(message){
     };
 }
 
-my_jaml.action.show_person_link=function(id){
-    render_in_dom({fn:partial(api.person.load, id) ,view: 'person_show', dom:'.main-content'});
+my_jaml.action.show_person_link=function(_id){
+    render_in_dom({fn:partial(api.person.load, _id) ,view: 'person_show', dom:'.main-content'});
 };
 
 
@@ -166,12 +166,11 @@ Jaml.register('person_show', function(person) {
 });
 
 Jaml.register('person_link', function(person){
-    this.form_id="#person_edit";
-    this.id=person.get_id();
+
     li(span(person.get_id()+" - "+person.get_fname()+" "+person.get_lname()) ,
-       a({ href: '#', onclick:"my_jaml.action.show_person_link("+person.get_id()+");"}, 'show'),
-       a({ href: '#', onclick:"my_jaml.action.edit_person_link("+person.get_id()+");"}, 'edit'),
-       a({ href: '#', onclick:"my_jaml.action.del_person_link("+person.get_id()+");"}, 'del')
+       a({ href: '#', cls:'show_person',   person_id:person.get_id()}, 'show'),
+       a({ href: '#', cls:'edit_person',   person_id:person.get_id()}, 'edit'),
+       a({ href: '#', cls:'del_person',   person_id:person.get_id()}, 'del')
       )
 });
 
