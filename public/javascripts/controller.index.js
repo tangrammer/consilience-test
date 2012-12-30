@@ -112,10 +112,12 @@ var api={
         },
         localize:function(_lang){set_locale(_lang);}
     },
-    welcome:{
-        intro: function(render_function){
+    render:{
+
+        view: function(render_function){
             return render_function.call({});
         }
+
     }
     
 };
@@ -223,8 +225,7 @@ function smoth_paint(e, r, on_end){
                        );});
 }
 
-
-
+ $(document).ready(my_jaml.action.welcome_app);
 
 
 

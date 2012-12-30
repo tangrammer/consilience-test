@@ -12,11 +12,15 @@ var names_id={
 
 var my_jaml={
     action:{
+        welcome_app:function(){
+          render_in_dom({fn:api.render.view, view:"welcome_app", dom:".main-content"}); 
+        },
         start:function(){
-          render_in_dom({fn:api.welcome.intro, view:"intro", dom:".main-content"}); 
+          render_in_dom({fn:api.render.view, view:"intro", dom:".main-content"}); 
           render_in_dom({fn:api.person.list, view:"person_list", dom:".sidebar", on_end:api.i18n.ui.binding_languages});
             
-        }
+        },
+        
     }
 };
 
@@ -51,6 +55,10 @@ Jaml.register('message', function(m){
         h1({cls:'intro'},  m)
     );
 });
-
+Jaml.register('welcome_app', function (){
+    div({clj:".welcome"},
+       p("The point of this assessment is demonstrate skills with JS, JSON, XML and basic RESTful interaction. " ,
+        br(),a({href:'#', onclick:"my_jaml.action.start();"}, "start cms persons")))}
+); 
 
 
