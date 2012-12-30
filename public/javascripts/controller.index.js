@@ -41,17 +41,23 @@ var core={
 
 
 var api={
-    form:{
-        remove:function(id, _on_end, _on_error){
-            core.ajax.form({form:"#person_edit", type:"delete", url:"/persons/"+id, on_end: _on_end, on_error:_on_error});
-        },
-        add:function(_on_end, _on_error){
-            core.ajax.form({form:"#person_edit", type:"post", url:"/persons/", on_end: _on_end, on_error:_on_error});
-        },
-        edit:function(id, _on_end, _on_error){
-            core.ajax.form({form:"#person_edit", type:"put", url:"/persons/"+id, on_end: _on_end, on_error:_on_error});
+    ajax:{
+        form:{
+            behavior:{
+                base:function(_form, _type, _url, _on_end, _on_error){
+                      core.ajax.form({form:_form, type:_type, url:_url, on_end: _on_end, on_error:_on_error});
+                },
+                remove:function( _on_end, _on_error){
+                    api.ajax.form.behavior.base(this.form_id, "delete", "/persons/"+this.id, _on_end, _on_error);
+                },
+                add:function(_on_end, _on_error){
+                    api.ajax.form.behavior.base(this.form_id, "post", "/persons/", _on_end, _on_error);
+                },
+                edit:function(id, _on_end, _on_error){
+                    api.ajax.form.behavior.base(this.form_id, "put", "/persons/"+this.id, _on_end, _on_error);
+                }
+            } 
         }
-
     },
     dao:{
         persons:function(caller){
@@ -144,21 +150,6 @@ function addDatePicker(id){
     });
 }
 
-/*
-  function localize(lang_){
-  set_locale(lang_);
-  if(person_selected !== undefined){
-  if(person_selected.get_id()!==0){
-  load_person(person_selected.get_id(), last_action_selected);
-  }else{
-  new_person();
-  }
-  } else{
-  include_main_div(Jaml.render('intro'));
-  }
-
-  }
-*/
 
 function check_dom_element(the_element){
     var o=$(the_element);
