@@ -56,7 +56,7 @@ exports.aply_fn_to_xml_files_in_dir_async=function(__dirname, if_no_results_fn, 
         if(this.counter==0){
             // without apply invocation cause never mind the inside
             // context in this case
-            on_no_result();
+            if_no_results_fn();
         }
         
         function on_file_function(){
