@@ -1,17 +1,3 @@
-var names_id={
-    _main_content_div:".main-content",
-    _widget_div:".widget",
-    person_detail_anchor:"person_detail",
-    __welcome_div:".welcome", 
-    person_edit_anchor:"person_edit",
-    person_del_anchor:"person_remove",
-    person_insert_anchor:"person_insert",
-    attr_person_id:"person_id"
-
-};
-
-
-
 Jaml.register('languages', function(lang){
     hr(),
     div({cls:"languages" },
