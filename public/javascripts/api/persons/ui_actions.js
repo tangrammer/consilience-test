@@ -3,8 +3,8 @@ var ui_helper={
         return render_function.call({result:message});  
     },
     simple_view: function(render_function){
-            return render_function.call({});
-        }
+        return render_function.call({});
+    }
 };
 var ui_actions={ 
     reload_person_list_sidebar:function(){
@@ -41,7 +41,10 @@ var ui_actions={
     edit_person_link: function(_id){
         var ajax_behavior= partial(ajax.form_restful_behavior.edit,
                                    this.reload_persons_fn('PERSON EDITED OK'),  
-                                   this.reload_persons_fn('AN ERROR HAS HAPPENED! :( '))
+                                   this.reload_persons_fn('AN ERROR HAS HAPPENED! :( '),
+                                   date_and_wage_xml_format
+
+                                  )
             .bind({form_id:"#person_edit", id:_id, url:"/persons/"});
         var on_end_fn=function(){
             ajax_behavior();
@@ -52,7 +55,9 @@ var ui_actions={
     add_person_link: function(){
         var ajax_behavior=partial(ajax.form_restful_behavior.add, 
                                   this.reload_persons_fn('PERSON INSERTED OK'),  
-                                  this.reload_persons_fn('AN ERROR HAS HAPPENED! :( '))
+                                  this.reload_persons_fn('AN ERROR HAS HAPPENED! :( '),
+                                  date_and_wage_xml_format
+                                 )
             .bind({form_id:"#person_edit", url:"/persons/"});
         var on_end_fn=function(){
             ajax_behavior();

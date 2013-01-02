@@ -15,6 +15,7 @@ var __dirname= "./data";
 
 
 function write_data(data, write_callback){
+    log(data);
     my_xml.create_xml_with_json_data('./data/'+data.person.id+'.xml', data, write_callback);
 }
 

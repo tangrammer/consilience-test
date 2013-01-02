@@ -2,7 +2,6 @@ Jaml.register('person_edit', function(person) {
     div({cls: 'person'},
         h1("Edit Person: "+person.get_fname()+" "+person.get_lname()),
         form({id:"person_edit"},
-             input({type: 'hidden', name: 'id', id: 'id', value: person.get_id()}),
              label({for: 'fname'}, "First Name: "),
              input({type: 'text', name: 'fname', id: 'fname', value: person.get_fname()}),
              br(),

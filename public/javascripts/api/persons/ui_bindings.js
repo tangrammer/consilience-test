@@ -18,6 +18,12 @@ var ui_bindings={
             click:function(){ui_actions.start();}
         });
     },
+    refresh_on_change_location:function(id_div){
+              // refresh cache: divs i18n related
+                if(ui.cache_funtions.cache[id_div]!==undefined)
+                    ui.cache_funtions.cache[id_div]();
+
+    },
     languages:function(){
         $(".languages > a").bind({
             click: function(e) {
@@ -25,13 +31,8 @@ var ui_bindings={
                 ui_actions.localize($(this).html());
 
                 
+                ui_bindings.refresh_on_change_location(".main-content");  
 
-                // refresh cache: divs i18n related
-                if(ui.cache_funtions.cache[".main-content"]!==undefined)
-                    ui.cache_funtions.cache[".main-content"]();
-
-                //                       display_message_main_content(typeof 
-                //      reload_person_list_sidebar();
                 $(this).addClass('selected');     
                 e.preventDefault();
             }
@@ -39,16 +40,28 @@ var ui_bindings={
     },
     localize_form: function(){
         $('#location').val(PersonLocalized.prototype.lang);
+        $('#location').change(this.on_change_location);
         this.addDatePicker("#DOB");
+        
+        
     },
+    on_change_location:function(){
+        var lang=$('#location').val();
+      
+        ui_actions.localize(lang);        
 
+                ui_bindings.refresh_on_change_location(".main-content");
+                ui_bindings.refresh_on_change_location(".sidebar");
+
+
+    },
     addDatePicker: function(id){
         $(function() {
             var lang=PersonLocalized.prototype.lang;
 
             $("#DOB").datepicker({ 
-                currentText:"juuu",
-                dateFormat: date_formats[lang] ,
+            
+                dateFormat: ui_date_formats[lang] ,
                 onSelect:function(s, o){
                     // alert('ey'+s+"---"+lang);
                     //to change the last value this.value="ja";
