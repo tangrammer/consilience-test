@@ -31,6 +31,9 @@ var ui_actions={
     show_person_link:function(_id){
         ui.function_in_dom_with_view({fn:partial(person_entity.load, _id) ,view: 'person_show', dom:'.main-content'});
     },
+    json_person_link:function(_id){
+        ui.function_in_dom_with_view({fn:partial(person_entity.load, _id) ,view: 'person_json', dom:'.main-content'});
+    },
     del_person_link:function (_id){
         var ajax_behavior= partial(ajax.form_restful_behavior.remove,  
                                    this.reload_persons_fn('PERSON REMOVED'),  

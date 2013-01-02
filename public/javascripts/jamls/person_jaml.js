@@ -117,12 +117,22 @@ Jaml.register('person_show', function(person) {
         Jaml.render('person_show_base', person));
 });
 
+Jaml.register('person_json', function(person) {
+    var data=person.data+" ";
+    div(
+        h1({cls:'result_action'}, "Show JSON Person: "+person.get_fname()+" "+person.get_lname()),
+        div(JSON.stringify(person)));
+
+
+});
+
 Jaml.register('person_link', function(person){
 
     li(span(person.get_id()+" - "+person.get_fname()+" "+person.get_lname()) ,
        a({ href: '#', cls:'show_person',   person_id:person.get_id()}, 'show'),
        a({ href: '#', cls:'edit_person',   person_id:person.get_id()}, 'edit'),
-       a({ href: '#', cls:'del_person',   person_id:person.get_id()}, 'del')
+       a({ href: '#', cls:'del_person',   person_id:person.get_id()}, 'del'),
+    a({ href: '#', cls:'json_person',   person_id:person.get_id()}, 'json')
       )
 });
 

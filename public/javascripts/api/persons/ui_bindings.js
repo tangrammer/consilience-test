@@ -12,6 +12,10 @@ var ui_bindings={
         $("a.add_person").bind({
             click:function(){ui_actions.add_person_link();}
         });
+        $("a.json_person").bind({
+            click:function(){ui_actions.json_person_link($(this).attr("person_id"));}
+
+        });
     },
     start_person_cms:function(){
         $("a.start_cms_person").bind({
@@ -47,7 +51,8 @@ var ui_bindings={
     },
     on_change_location:function(){
         var lang=$('#location').val();
-      
+              $( "#dialog" ).dialog();
+
         ui_actions.localize(lang);        
 
                 ui_bindings.refresh_on_change_location(".main-content");
