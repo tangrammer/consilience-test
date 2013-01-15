@@ -3,6 +3,9 @@ consilience-test
 
 no rush, no presure and don't be panic!
 
+You can view the scpecification instructions here
+https://github.com/juanantonioruz/consilience-test/blob/master/specification.txt
+
 Feature explanations in 
 https://github.com/juanantonioruz/consilience-test/wiki 
 
