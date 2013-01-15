@@ -5,6 +5,7 @@
   , "dependencies": {
       "express": "3.x"
       , "jquery": "*"
+      , "jasmine-node": "*"
       , "jstoxml": "0.1.0"
       ,"xmlhttprequest": "1.5.0"
       , "stylus": ">= 0.0.1"
