@@ -35,8 +35,9 @@ my_cat.address="c/AZafran";
 my_cat.color="white";
 
 log(my_cat.name+" address: "+my_cat.address);
-
+log(typeof my_cat+" ");
 var little_blue=Object.beget(my_cat);
+log(typeof little_blue+" "+ little_blue.prototype);
 little_blue.name="pim";
 little_blue.color="blue";
 log(little_blue.name+" address: "+little_blue.address+little_blue.color);
@@ -54,4 +55,21 @@ little_red.name="bis";
 little_bis.color="orange";
 
 log(little_bis.name+" address: "+little_bis.address+little_bis.color);
+log("-");log("-");log("-");
+var Plane=function(nombr){
+    this.vuela="vuela: "+ true;
+    this.nombre=nombr;
 
+};
+
+
+var HydroPlane=function(){
+    this.flota=true;
+
+};
+var plane=new Plane("PLANE NAME - INSTACE");
+HydroPlane.prototype=plane;
+log(HydroPlane.prototype);
+var hid_av=new HydroPlane();
+log(hid_av.vuela+" "+hid_av.nombre);
+assert(Plane instanceof Function);
